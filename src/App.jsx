@@ -1,24 +1,36 @@
-import { useGetPokemonByNameQuery } from './services/pokemon';
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Route, Router, Routes } from 'react-router-dom'
 
-import './App.css';
+import Login from './pages/login/Login'
+import Main from './pages/main/Main'
+import NotFound from './pages/notFound/NotFound'
+import Register from './pages/register/Register'
+
+import { getUserRequest } from './utils/api'
+
+import Layout from './hoc/Layout'
+import PrivateRoutes from './hoc/PrivateRoutes'
 
 function App() {
-  const { data, error, isLoading } = useGetPokemonByNameQuery('bulbasaur');
-  // const { data, error, isLoading } = pokemonApi.endpoints.getPokemonByName.useQuery('bulbasaur');
+  // const dispatch = useDispatch()
+
+  // useEffect(() => {
+  //   dispatch(getUserRequest())
+  // }, [])
+
   return (
-    <div className="App">
-      {error ? (
-        <>Oh no, there was an error</>
-      ) : isLoading ? (
-        <>Loading...</>
-      ) : data ? (
-        <>
-          <h3>{data.species.name}</h3>
-          <img src={data.sprites.front_shiny} alt={data.species.name} />
-        </>
-      ) : null}
-    </div>
-  );
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route element={<PrivateRoutes />}>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Main />} />
+        </Route>
+      </Route>
+      <Route path="/*" element={<NotFound />} />
+    </Routes>
+  )
 }
 
-export default App;
+export default App
