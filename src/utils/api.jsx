@@ -6,6 +6,8 @@ import { storage } from '../libs/appwrite'
 
 const id_user = ID.unique()
 const bucket_id = import.meta.env.VITE_BUCKET_ID
+const baseUrl = `${window.location.protocol}//${window.location.host}`
+const resetPasswordUrl = `${baseUrl}/update-password`
 
 export const loginRequest = createAsyncThunk(
   'login/loginRequest',
@@ -18,7 +20,7 @@ export const loginRequest = createAsyncThunk(
       dispatch(getUserRequest())
       return response
     } catch (error) {
-      return rejectWithValue(error.message)
+      return rejectWithValue(error.code)
     }
   },
 )
@@ -31,7 +33,7 @@ export const logoutRequest = createAsyncThunk(
       dispatch(getUserRequest())
       return response
     } catch (error) {
-      return rejectWithValue(error.message)
+      return rejectWithValue(error.code)
     }
   },
 )
@@ -48,7 +50,7 @@ export const registerRequest = createAsyncThunk(
       )
       return response
     } catch (error) {
-      return rejectWithValue(error.message)
+      return rejectWithValue(error.code)
     }
   },
 )
@@ -60,7 +62,7 @@ export const getUserRequest = createAsyncThunk(
       const response = await account.get()
       return response
     } catch (error) {
-      return rejectWithValue(error.message)
+      return rejectWithValue(error.code)
     }
   },
 )
@@ -69,30 +71,33 @@ export const resetPasswordRequest = createAsyncThunk(
   'resetPassword/resetPasswordRequest',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await account.account.createRecovery(
+      const response = await account.createRecovery(
         data.email,
-        data.hostname,
+        resetPasswordUrl,
       )
       return response
     } catch (error) {
-      return rejectWithValue(error.message)
+      return rejectWithValue(error.code)
     }
   },
 )
 
 export const updatePasswordRequest = createAsyncThunk(
   'updatePassword/updatePasswordRequest',
-  async (data, { rejectWithValue }) => {
+  async (
+    { userId, secret, newPassword, confirmPassword },
+    { rejectWithValue, dispatch },
+  ) => {
     try {
       const response = await account.updateRecovery(
-        data.userId,
-        data.secret,
-        data.newPassword,
-        data.confirmPassword,
+        userId,
+        secret,
+        newPassword,
+        confirmPassword,
       )
       return response
     } catch (error) {
-      return rejectWithValue(error.message)
+      return rejectWithValue(error.code)
     }
   },
 )
@@ -104,7 +109,7 @@ export const createFileRequest = createAsyncThunk(
       const response = await storage.createFile(bucket_id, userId, image)
       return response
     } catch (error) {
-      return rejectWithValue(error.message)
+      return rejectWithValue(error.code)
     }
   },
 )
@@ -116,7 +121,7 @@ export const listFilesRequest = createAsyncThunk(
       const response = await storage.listFiles(bucket_id)
       return response
     } catch (error) {
-      return rejectWithValue(error.message)
+      return rejectWithValue(error.code)
     }
   },
 )
@@ -128,7 +133,7 @@ export const getFileRequest = createAsyncThunk(
       const response = await storage.getFileView(bucket_id, file_id)
       return response.href
     } catch (error) {
-      return rejectWithValue(error.message)
+      return rejectWithValue(error.code)
     }
   },
 )

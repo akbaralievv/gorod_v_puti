@@ -3,19 +3,23 @@ import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 
-import {
-  createFileRequest,
-  getUserRequest,
-  registerRequest,
-} from '../../utils/api'
-import { clearRegisterData } from '../../redux/slices/account/register'
-
-import editAvatar from '../../assets/authForm/edit-text.png'
 import hideEye from '../../assets/authForm/hide eye.png'
 import showEye from '../../assets/authForm/view eye.png'
+
+import { getUserRequest, updatePasswordRequest } from '../../utils/api'
+import { clearUpdatePasswordData } from '../../redux/slices/account/updatePassword'
+
 import logo from '../../../public/logo blue.png'
 
-const Register = () => {
+const UpdatePassword = () => {
+  const { updatePasswordData, loading: updatePasswordLoad } = useSelector(
+    (state) => state.updatePassword,
+  )
+
+  const { userData, loading: getUserLoad } = useSelector(
+    (state) => state.getUser,
+  )
+
   const {
     register,
     handleSubmit,
@@ -23,46 +27,41 @@ const Register = () => {
     formState: { errors },
   } = useForm()
 
-  const { registerData, loading: registerLoad } = useSelector(
-    (state) => state.register,
-  )
-  const { userData, loading: getUserLoad } = useSelector(
-    (state) => state.getUser,
-  )
-
   const [eye, setEye] = useState(false)
   const [eyeConfirm, setEyeConfirm] = useState(false)
-
-  const [image, setImage] = useState(null)
-  const [imagePreview, setImagePreview] = useState(null)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const password = watch('password', '')
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0]
-    setImage(file)
-    setImagePreview(URL.createObjectURL(file))
+  const currentUrl = new URL(window.location.href)
+  const params = new URLSearchParams(currentUrl.search)
+
+  const userId = params.get('userId')
+  const secret = params.get('secret')
+
+  const onSubmitUpdatePassword = (data) => {
+    dispatch(
+      updatePasswordRequest({
+        userId,
+        secret,
+        newPassword: data.password,
+        confirmPassword: data.confirmPassword,
+      }),
+    )
   }
 
-  const onSubmit = (data) => {
-    data.username = data.username.trim()
-    dispatch(registerRequest(data))
-  }
+  useEffect(() => {
+    if (!updatePasswordLoad && updatePasswordData) {
+      navigate('/login')
+    }
+  }, [updatePasswordLoad, updatePasswordData, navigate])
 
   useEffect(() => {
     dispatch(getUserRequest())
-    return () => dispatch(clearRegisterData())
+    return () => dispatch(clearUpdatePasswordData())
   }, [])
-
-  useEffect(() => {
-    if (!registerLoad && registerData) {
-      image && dispatch(createFileRequest({ image, userId: registerData.$id }))
-      navigate('/login')
-    }
-  }, [registerLoad, registerData, navigate])
 
   useEffect(() => {
     if (!getUserLoad && userData) {
@@ -74,118 +73,17 @@ const Register = () => {
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img className="mx-auto w-28" src={logo} alt="logo" />
-        <h2 className="mt-5 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Создайте аккаунт
+        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          Измените свой пароль
         </h2>
       </div>
-
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form
           className="space-y-6"
           action="#"
           method="POST"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmitUpdatePassword)}
         >
-          <div className="flex justify-center">
-            <label className="relative inline-block cursor-pointer">
-              <span className="bg-gray-200 rounded-full overflow-hidden w-24 h-24 inline-block">
-                {imagePreview ? (
-                  <img
-                    className="text-gray-300 w-full h-full"
-                    src={imagePreview}
-                    alt="Your Photo"
-                  />
-                ) : (
-                  <svg
-                    className="text-gray-300 w-full h-full"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                )}
-              </span>
-              <img
-                src={editAvatar}
-                alt="edit"
-                className="mx-auto w-7 absolute top-[80%] right-[-0.7rem] -translate-y-1/2 cursor-pointer"
-              />
-              <input
-                type="file"
-                id="imageInput"
-                className="hidden"
-                onChange={handleImageChange}
-              />
-            </label>
-          </div>
-          <div>
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Ваше Фамилия и Имя
-            </label>
-            <div className="mt-2">
-              <input
-                id="username"
-                name="username"
-                type="text"
-                autoComplete="username"
-                {...register('username', {
-                  required: 'Требуется ФИО',
-                  validate: {
-                    trimAndPattern: (value) => {
-                      const trimmedValue = value.trim()
-                      if (
-                        !/^[a-zA-Zа-яА-Я-]+ [a-zA-Zа-яА-Я-]+(?: [a-zA-Zа-яА-Я-]+)?$/i.test(
-                          trimmedValue,
-                        )
-                      ) {
-                        return 'Некорректное ФИО. Пример (Фамилия Имя)'
-                      }
-                      return true
-                    },
-                  },
-                })}
-                className={`${errors.username ? 'bg-red-500 bg-opacity-25' : ''} block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
-              />
-              {errors.username && (
-                <p className="text-sm leading-6 text-red-500">
-                  {errors.username.message}
-                </p>
-              )}
-            </div>
-          </div>
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Ваш адрес электронной почты
-            </label>
-            <div className="mt-2">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                {...register('email', {
-                  required: 'Требуется электронная почта',
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                    message: 'Некорректный адрес электронной почты',
-                  },
-                })}
-                className={`${errors.email ? 'bg-red-500 bg-opacity-25' : ''} block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
-              />
-              {errors.email && (
-                <p className="text-sm leading-6 text-red-500">
-                  {errors.email.message}
-                </p>
-              )}
-            </div>
-          </div>
-
           <div>
             <div className="flex items-center justify-between">
               <label
@@ -266,10 +164,10 @@ const Register = () => {
           <div>
             <button
               type="submit"
-              disabled={registerLoad || getUserLoad}
-              className={`${registerLoad || getUserLoad ? 'bg-indigo-500' : ''} flex w-full items-center justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
+              disabled={updatePasswordLoad}
+              className={`${updatePasswordLoad ? 'bg-indigo-500' : ''} flex w-full items-center justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
             >
-              {getUserLoad || registerLoad ? (
+              {updatePasswordLoad ? (
                 <>
                   <svg
                     aria-hidden="true"
@@ -291,19 +189,18 @@ const Register = () => {
                   Загрузка...
                 </>
               ) : (
-                'Зарегистрироваться'
+                'Изменить пароль'
               )}
             </button>
           </div>
         </form>
-
         <p className="mt-10 text-center text-sm text-gray-500">
-          Уже есть аккаунт?{' '}
+          У вас еще нет аккаунта?{' '}
           <NavLink
-            to={'/login'}
+            to={'/register'}
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
-            Авторизуйтесь.
+            Зарегистрируйтесь.
           </NavLink>
         </p>
       </div>
@@ -311,4 +208,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default UpdatePassword

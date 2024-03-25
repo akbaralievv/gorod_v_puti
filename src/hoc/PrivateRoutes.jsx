@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
 
 import { getUserRequest } from '../utils/api'
 import ModalPreload from '../components/modalPreload/ModalPreload'
@@ -10,16 +10,29 @@ const PrivateRoutes = () => {
     (state) => state.getUser,
   )
   const { loading: logoutLoad } = useSelector((state) => state.logout)
-
+  const location = useLocation()
   const dispatch = useDispatch()
 
+  const [isAuthInitialized, setIsAuthInitialized] = useState(false)
+
   useEffect(() => {
-    dispatch(getUserRequest())
-  }, [])
+    const checkAuthStatus = async () => {
+      await dispatch(getUserRequest())
+      setIsAuthInitialized(true)
+    }
 
-  if (getUserLoad || logoutLoad) return <ModalPreload />
+    checkAuthStatus()
+  }, [dispatch])
 
-  return userData ? <Outlet /> : <Navigate to="/login" />
+  if (!isAuthInitialized || getUserLoad || logoutLoad) {
+    return <ModalPreload />
+  }
+
+  return userData ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/login" state={{ from: location }} replace />
+  )
 }
 
 export default PrivateRoutes

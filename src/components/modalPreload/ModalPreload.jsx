@@ -1,5 +1,7 @@
 import React from 'react'
 
+import './ModalPreload.css'
+
 function ModalPreload() {
   return (
     <div

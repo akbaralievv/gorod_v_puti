@@ -25,7 +25,7 @@ function Main() {
   }
 
   return (
-    <div className="Main">
+    <div className="flex-1">
       {error ? (
         <>Oh no, there was an error</>
       ) : isLoading ? (

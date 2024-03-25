@@ -1,35 +1,32 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Route, Router, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 
 import Login from './pages/login/Login'
 import Main from './pages/main/Main'
 import NotFound from './pages/notFound/NotFound'
 import Register from './pages/register/Register'
 
-import { getUserRequest } from './utils/api'
-
 import Layout from './hoc/Layout'
 import PrivateRoutes from './hoc/PrivateRoutes'
 
+import Alerts from './components/alerts/Alerts'
+import UpdatePassword from './pages/updatePassword/UpdatePassword'
+
 function App() {
-  // const dispatch = useDispatch()
-
-  // useEffect(() => {
-  //   dispatch(getUserRequest())
-  // }, [])
-
   return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route element={<PrivateRoutes />}>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Main />} />
+    <div className="flex flex-col h-screen">
+      <Alerts />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/update-password" element={<UpdatePassword />} />
+        <Route element={<PrivateRoutes />}>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Main />} />
+          </Route>
         </Route>
-      </Route>
-      <Route path="/*" element={<NotFound />} />
-    </Routes>
+        <Route path="/*" element={<NotFound />} />
+      </Routes>
+    </div>
   )
 }
 
