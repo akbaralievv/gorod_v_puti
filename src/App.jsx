@@ -10,11 +10,13 @@ import PrivateRoutes from './hoc/PrivateRoutes'
 
 import Alerts from './components/alerts/Alerts'
 import UpdatePassword from './pages/updatePassword/UpdatePassword'
+import ScrollToTopButton from './components/buttons/scrollToTopButton/ScrollToTopButton'
 
 function App() {
   return (
     <div className="flex flex-col h-screen">
       <Alerts />
+      <ScrollToTopButton />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

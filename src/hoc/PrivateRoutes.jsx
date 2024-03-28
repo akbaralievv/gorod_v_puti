@@ -10,10 +10,10 @@ const PrivateRoutes = () => {
     (state) => state.getUser,
   )
   const { loading: logoutLoad } = useSelector((state) => state.logout)
+  const [isAuthInitialized, setIsAuthInitialized] = useState(false)
+
   const location = useLocation()
   const dispatch = useDispatch()
-
-  const [isAuthInitialized, setIsAuthInitialized] = useState(false)
 
   useEffect(() => {
     const checkAuthStatus = async () => {

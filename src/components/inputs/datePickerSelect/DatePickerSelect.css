@@ -1,0 +1,97 @@
+:where(.css-dev-only-do-not-override-42nv3w).ant-picker-outlined,
+:where(.css-dev-only-do-not-override-42nv3w).ant-picker-dropdown
+  .ant-picker-panel-container {
+  background-color: rgb(55 65 81 / 1);
+  border-color: rgb(75 85 99 / 1);
+  color: white;
+}
+
+:where(.css-dev-only-do-not-override-42nv3w).ant-picker-outlined:hover,
+:where(.css-dev-only-do-not-override-42nv3w).ant-picker-outlined:focus-within {
+  background-color: rgb(55 65 81 / 1);
+}
+
+.ant-picker-input input::placeholder,
+.ant-picker-input-placeholder > input {
+  color: rgba(255, 255, 255, 0.503) !important;
+}
+
+:where(.css-dev-only-do-not-override-42nv3w).ant-picker-dropdown
+  .ant-picker-cell {
+  color: rgb(0 0 0 / 39%);
+}
+
+:where(.css-dev-only-do-not-override-42nv3w).ant-picker-dropdown
+  .ant-picker-cell,
+.ant-picker-cell-disabled {
+  color: rgb(255 255 255 / 23%);
+}
+
+:where(.css-dev-only-do-not-override-42nv3w).ant-picker-dropdown
+  .ant-picker-cell-in-view,
+:where(.css-dev-only-do-not-override-42nv3w).ant-picker-dropdown
+  .ant-picker-content
+  th,
+:where(.css-dev-only-do-not-override-42nv3w).ant-picker-dropdown
+  .ant-picker-header {
+  color: white;
+}
+
+:where(.css-dev-only-do-not-override-42nv3w).ant-picker-dropdown
+  .ant-picker-cell:hover:not(.ant-picker-cell-selected):not(
+    .ant-picker-cell-range-start
+  ):not(.ant-picker-cell-range-end)
+  .ant-picker-cell-inner,
+:where(.css-dev-only-do-not-override-42nv3w).ant-picker-dropdown
+  .ant-picker-time-panel-column
+  > li.ant-picker-time-panel-cell
+  .ant-picker-time-panel-cell-inner:hover {
+  background: rgb(0 0 0 / 20%);
+}
+
+.ant-picker-header-view,
+.ant-picker-header-view button,
+.ant-picker-time-panel-cell-inner {
+  color: white !important;
+}
+
+:where(.css-dev-only-do-not-override-42nv3w).ant-picker-dropdown
+  .ant-picker-header
+  button {
+  color: rgb(255 255 255 / 55%);
+}
+
+:where(.css-dev-only-do-not-override-42nv3w).ant-picker-dropdown
+  .ant-picker-time-panel-column
+  > li.ant-picker-time-panel-cell-selected
+  .ant-picker-time-panel-cell-inner {
+  background: #e6f4ff26;
+}
+
+:where(.css-dev-only-do-not-override-42nv3w).ant-btn-primary {
+  box-shadow: none;
+}
+
+:where(.css-dev-only-do-not-override-42nv3w) a:hover {
+  color: white;
+}
+
+.ant-picker-now-btn {
+  background: #1677ff;
+  padding: 4px 7px;
+  border-radius: 4px;
+}
+
+.ant-picker-now-btn:hover {
+  background: #4096ff;
+}
+
+.ant-picker-ok button {
+  background: #1677ff;
+  padding: 0px 7px;
+  border-radius: 4px;
+}
+.ant-picker {
+  display: flex;
+  flex: 1 1 auto;
+}

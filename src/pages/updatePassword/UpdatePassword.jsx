@@ -3,10 +3,10 @@ import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 
-import hideEye from '../../assets/authForm/hide eye.png'
-import showEye from '../../assets/authForm/view eye.png'
+import hideEye from '../../assets/icons/authForm/hide eye.png'
+import showEye from '../../assets/icons/authForm/view eye.png'
 
-import { getUserRequest, updatePasswordRequest } from '../../utils/api'
+import { updatePasswordRequest } from '../../utils/api'
 import { clearUpdatePasswordData } from '../../redux/slices/account/updatePassword'
 
 import logo from '../../../public/logo blue.png'
@@ -14,10 +14,6 @@ import logo from '../../../public/logo blue.png'
 const UpdatePassword = () => {
   const { updatePasswordData, loading: updatePasswordLoad } = useSelector(
     (state) => state.updatePassword,
-  )
-
-  const { userData, loading: getUserLoad } = useSelector(
-    (state) => state.getUser,
   )
 
   const {
@@ -59,15 +55,8 @@ const UpdatePassword = () => {
   }, [updatePasswordLoad, updatePasswordData, navigate])
 
   useEffect(() => {
-    dispatch(getUserRequest())
     return () => dispatch(clearUpdatePasswordData())
   }, [])
-
-  useEffect(() => {
-    if (!getUserLoad && userData) {
-      navigate('/')
-    }
-  }, [getUserLoad, userData, navigate])
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">

@@ -6,6 +6,10 @@ import {
   useCreateDriverCollectionMutation,
   useGetDriverCollectionQuery,
 } from '../../services/databases/driverCollection'
+import './Main.css'
+
+import HomeSection from '../../layouts/sections/homeSection/HomeSection'
+import CreatePublicSection from '../../layouts/sections/createPublicSection/CreatePublicSection'
 
 function Main() {
   const { data, error, isLoading } = useGetDriverCollectionQuery()
@@ -25,16 +29,9 @@ function Main() {
   }
 
   return (
-    <div className="flex-1">
-      {error ? (
-        <>Oh no, there was an error</>
-      ) : isLoading ? (
-        <>Loading...</>
-      ) : data ? (
-        <>
-          <button onClick={handleClick}>LCick</button>
-        </>
-      ) : null}
+    <div className="flex-1 _neKTiNR9ODo9dbROzCM dark">
+      <HomeSection />
+      <CreatePublicSection />
     </div>
   )
 }

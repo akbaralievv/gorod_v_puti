@@ -12,9 +12,9 @@ import useImageChecker from '../../hooks/useImageChecker'
 import logo from '../../../public/logo white.png'
 
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
+  { name: 'Главная', href: '#', current: true },
+  { name: 'Транспорты', href: '#', current: false },
+  { name: 'Пассажиры', href: '#', current: false },
   { name: 'Calendar', href: '#', current: false },
 ]
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 
 import {
   createFileRequest,
@@ -10,9 +10,9 @@ import {
 } from '../../utils/api'
 import { clearRegisterData } from '../../redux/slices/account/register'
 
-import editAvatar from '../../assets/authForm/edit-text.png'
-import hideEye from '../../assets/authForm/hide eye.png'
-import showEye from '../../assets/authForm/view eye.png'
+import editAvatar from '../../assets/icons/authForm/edit-text.png'
+import hideEye from '../../assets/icons/authForm/hide eye.png'
+import showEye from '../../assets/icons/authForm/view eye.png'
 import logo from '../../../public/logo blue.png'
 
 const Register = () => {
@@ -38,8 +38,10 @@ const Register = () => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const location = useLocation()
 
   const password = watch('password', '')
+  const fromPath = location.state?.from || 'unknown'
 
   const handleImageChange = (e) => {
     const file = e.target.files[0]
@@ -53,7 +55,9 @@ const Register = () => {
   }
 
   useEffect(() => {
-    dispatch(getUserRequest())
+    if (fromPath !== '/login') {
+      dispatch(getUserRequest())
+    }
     return () => dispatch(clearRegisterData())
   }, [])
 
@@ -301,6 +305,7 @@ const Register = () => {
           Уже есть аккаунт?{' '}
           <NavLink
             to={'/login'}
+            state={{ from: location.pathname }}
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
             Авторизуйтесь.

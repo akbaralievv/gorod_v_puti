@@ -1,0 +1,15 @@
+:where(.css-dev-only-do-not-override-42nv3w).ant-input-number-outlined {
+  background-color: rgb(55 65 81 / 1);
+  border-color: rgb(75 85 99 / 1);
+  color: white;
+}
+:where(.css-dev-only-do-not-override-42nv3w).ant-input-number
+  .ant-input-number-input {
+  color: white;
+}
+:where(.css-dev-only-do-not-override-42nv3w).ant-input-number-outlined:hover,
+:where(
+    .css-dev-only-do-not-override-42nv3w
+  ).ant-input-number-outlined:focus-within {
+  background-color: rgb(55 65 81 / 1);
+}

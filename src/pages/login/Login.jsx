@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 
-import hideEye from '../../assets/authForm/hide eye.png'
-import showEye from '../../assets/authForm/view eye.png'
+import hideEye from '../../assets/icons/authForm/hide eye.png'
+import showEye from '../../assets/icons/authForm/view eye.png'
 
 import {
   getUserRequest,
@@ -36,6 +36,9 @@ const Login = () => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const location = useLocation()
+
+  const fromPath = location.state?.from || 'unknown'
 
   const onSubmit = (data) => {
     dispatch(loginRequest(data))
@@ -51,7 +54,9 @@ const Login = () => {
   }
 
   useEffect(() => {
-    dispatch(getUserRequest())
+    if (fromPath !== '/register') {
+      dispatch(getUserRequest())
+    }
     return () => {
       dispatch(clearLoginData())
       dispatch(clearResetPasswordData())
@@ -277,6 +282,7 @@ const Login = () => {
           У вас еще нет аккаунта?{' '}
           <NavLink
             to={'/register'}
+            state={{ from: location.pathname }}
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
             Зарегистрируйтесь.

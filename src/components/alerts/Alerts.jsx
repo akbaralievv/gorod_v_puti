@@ -47,196 +47,97 @@ function Alerts() {
   const [message, setMessage] = useState('')
 
   useEffect(() => {
-    if (!registerLoading && registerError === 409) {
-      setShowAlert((prev) => ({
-        ...prev,
-        warn: true,
-        success: false,
-        error: false,
-        info: false,
-      }))
-      setMessage('Аккаунт с таким адресом электронной почты уже существует.')
-      setTimeout(
-        () =>
-          setShowAlert((prev) => ({
-            ...prev,
-            warn: false,
-          })),
-        5000,
-      )
-    } else if (!registerLoading && registerData) {
-      setShowAlert((prev) => ({
-        ...prev,
-        warn: false,
-        success: true,
-        error: false,
-        info: false,
-      }))
-      setMessage('Вы зарегистрировались. А теперь авторизуйтесь.')
-      setTimeout(
-        () =>
-          setShowAlert((prev) => ({
-            ...prev,
-            success: false,
-          })),
-        5000,
-      )
+    if (!registerLoading) {
+      if (registerError === 409) {
+        setAlert(
+          'warn',
+          'Аккаунт с таким адресом электронной почты уже существует.',
+        )
+      } else if (registerError === 429) {
+        setAlert(
+          'error',
+          'Превышен предел скорости для регистрации. Пожалуйста, повторите попытку через некоторое время.',
+        )
+      } else if (registerData) {
+        setAlert('success', 'Вы зарегистрировались. А теперь авторизуйтесь.')
+      }
     }
-  }, [registerLoading])
+  }, [registerLoading, registerError, registerData])
 
   useEffect(() => {
-    if (!loginLoading && loginError === 401) {
-      setShowAlert((prev) => ({
-        ...prev,
-        warn: false,
-        success: false,
-        error: true,
-        info: false,
-      }))
-      setMessage('Неправильный адрес электронной почты или пароль.')
-      setTimeout(
-        () =>
-          setShowAlert((prev) => ({
-            ...prev,
-            error: false,
-          })),
-        5000,
-      )
-    } else if (!loginLoading && loginData) {
-      setShowAlert((prev) => ({
-        ...prev,
-        warn: false,
-        success: true,
-        error: false,
-        info: false,
-      }))
-      setMessage('Вы авторизовались.')
-      setTimeout(
-        () =>
-          setShowAlert((prev) => ({
-            ...prev,
-            success: false,
-          })),
-        5000,
-      )
+    if (!loginLoading) {
+      if (loginError === 401) {
+        setAlert('error', 'Неправильный адрес электронной почты или пароль.')
+      } else if (loginError === 429) {
+        setAlert(
+          'error',
+          'Превышен предел скорости для авторизации. Пожалуйста, повторите попытку через некоторое время.',
+        )
+      } else if (loginData) {
+        setAlert('success', 'Вы авторизовались.')
+      }
     }
-  }, [loginLoading])
+  }, [loginLoading, loginError, loginData])
 
   useEffect(() => {
-    if (!logoutLoading && logoutError) {
-      setShowAlert((prev) => ({
-        ...prev,
-        warn: false,
-        success: false,
-        error: true,
-        info: false,
-      }))
-      setMessage('Произошла непредвиденная ошибка.')
-      setTimeout(
-        () =>
-          setShowAlert((prev) => ({
-            ...prev,
-            error: false,
-          })),
-        5000,
-      )
-    } else if (!logoutLoading && logoutData) {
-      setShowAlert((prev) => ({
-        ...prev,
-        warn: false,
-        success: true,
-        error: false,
-        info: false,
-      }))
-      setMessage('Вы вышли из аккаунта.')
-      setTimeout(
-        () =>
-          setShowAlert((prev) => ({
-            ...prev,
-            success: false,
-          })),
-        5000,
-      )
+    if (!logoutLoading) {
+      if (logoutError === 429) {
+        setAlert(
+          'error',
+          'Превышен предел скорости. Пожалуйста, повторите попытку через некоторое время.',
+        )
+      } else if (logoutError) {
+        setAlert('error', 'Произошла непредвиденная ошибка.')
+      } else if (logoutData) {
+        setAlert('success', 'Вы вышли из аккаунта.')
+      }
     }
-  }, [logoutLoading])
+  }, [logoutLoading, logoutError, logoutData])
 
   useEffect(() => {
-    if (!updatePasswordLoading && updatePasswordData) {
-      setShowAlert((prev) => ({
-        ...prev,
-        warn: false,
-        success: true,
-        error: false,
-        info: false,
-      }))
-      setMessage('Ваш пароль изменен. Теперь авторизуйтесь.')
-      setTimeout(
-        () =>
-          setShowAlert((prev) => ({
-            ...prev,
-            success: false,
-          })),
-        5000,
-      )
-    } else if (!updatePasswordLoading && updatePasswordError) {
-      setShowAlert((prev) => ({
-        ...prev,
-        warn: false,
-        success: false,
-        error: true,
-        info: false,
-      }))
-      setMessage('Произошла непредвиденная ошибка.')
-      setTimeout(
-        () =>
-          setShowAlert((prev) => ({
-            ...prev,
-            success: false,
-          })),
-        5000,
-      )
+    if (!updatePasswordLoading) {
+      if (updatePasswordError === 429) {
+        setAlert(
+          'error',
+          'Превышен предел скорости. Пожалуйста, повторите попытку через некоторое время.',
+        )
+      } else if (updatePasswordError) {
+        setAlert('error', 'Произошла непредвиденная ошибка.')
+      } else if (updatePasswordData) {
+        setAlert('success', 'Ваш пароль изменен. Теперь авторизуйтесь.')
+      }
     }
-  }, [updatePasswordLoading])
+  }, [updatePasswordLoading, updatePasswordError, updatePasswordData])
 
   useEffect(() => {
-    if (!resetPasswordLoading && resetPasswordData) {
-      setShowAlert((prev) => ({
-        ...prev,
-        warn: false,
-        success: true,
-        error: false,
-        info: false,
-      }))
-      setMessage(
-        'Ссылка отправлена вам на почту. Перейдите по ней для изменения пароля.',
-      )
-      setTimeout(
-        () =>
-          setShowAlert((prev) => ({
-            ...prev,
-            success: false,
-          })),
-        5000,
-      )
-    } else if (!resetPasswordLoading && resetPasswordError) {
-      setShowAlert((prev) => ({
-        ...prev,
-        warn: false,
-        success: false,
-        error: true,
-        info: false,
-      }))
-      setMessage('Произошла непредвиденная ошибка.')
-      setTimeout(
-        () =>
-          setShowAlert((prev) => ({
-            ...prev,
-            success: false,
-          })),
-        5000,
-      )
+    if (!resetPasswordLoading) {
+      if (resetPasswordError === 429) {
+        setAlert(
+          'error',
+          'Превышен предел скорости. Пожалуйста, повторите попытку через некоторое время.',
+        )
+      } else if (resetPasswordError) {
+        setAlert('error', 'Произошла непредвиденная ошибка.')
+      } else if (resetPasswordData) {
+        setAlert(
+          'success',
+          'Ссылка отправлена вам на почту. Перейдите по ней для изменения пароля.',
+        )
+      }
     }
-  }, [resetPasswordLoading])
+  }, [resetPasswordLoading, resetPasswordError, resetPasswordData])
+
+  function setAlert(type, message) {
+    setShowAlert((prev) => ({
+      ...prev,
+      warn: type === 'warn',
+      success: type === 'success',
+      error: type === 'error',
+      info: type === 'info',
+    }))
+    setMessage(message)
+    setTimeout(() => setShowAlert((prev) => ({ ...prev, [type]: false })), 5000)
+  }
 
   return (
     <div className="flex flex-col justify-start items-start fixed right-2 top-8 z-10">

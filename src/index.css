@@ -2,8 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-/* #root {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  min-height: 100%;
-} */
