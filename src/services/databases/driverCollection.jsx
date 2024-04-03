@@ -1,13 +1,13 @@
-import { baseSplitApi } from '../baseSplitApi'
+import { baseApiAppwrite } from '../baseSplitApi'
 
 const IDEAS_DATABASE_ID = import.meta.env.VITE_IDEAS_DATABASE_ID
 const IDEAS_COLLECTION_ID = import.meta.env.VITE_IDEAS_COLLECTION_DRIVER_ID
 
-const driverCollection = baseSplitApi.injectEndpoints({
+const driverCollection = baseApiAppwrite.injectEndpoints({
   endpoints: (build) => ({
     getDriverCollection: build.query({
       query: () =>
-        `databases/${IDEAS_DATABASE_ID}/collections/${IDEAS_COLLECTION_ID}/documents`,
+        `databases/${IDEAS_DATABASE_ID}/collections/${IDEAS_COLLECTION_ID}/documents?queries[]=orderDesc("from")`,
     }),
     createDriverCollection: build.mutation({
       query(id) {

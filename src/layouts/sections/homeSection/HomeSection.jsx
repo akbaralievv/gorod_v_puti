@@ -2,30 +2,71 @@ import React from 'react'
 
 import SearchForm from '../../../components/searchForm/SearchForm'
 
+import image from '../../../assets/images/main/mainImage.jpg'
+
 function HomeSection() {
+  const links = [
+    { name: 'Open roles', href: '#' },
+    { name: 'Internship program', href: '#' },
+    { name: 'Our values', href: '#' },
+    { name: 'Meet our leadership', href: '#' },
+  ]
+  const stats = [
+    { name: 'Offices worldwide', value: '12' },
+    { name: 'Full-time colleagues', value: '300+' },
+    { name: 'Hours per week', value: '40' },
+    { name: 'Paid time off', value: 'Unlimited' },
+  ]
   return (
-    <section className="_B0njguYr9DDnIG2M8iY _6AI6SY1lyVfKpv37xl0 POA0xdG25nlhxqWJyl1U pcWvkQQ8p_VQZFs_K2QA lxr73ToDk8rdp_lBYfnv w2FVb1hpekxixpXpZt_l">
-      <div className="flex flex-col items-center QYPW4nl6nHaIbrtaXf4h OmM4wtdsNjVR2r7OSzsm veFXkDzfJN473U3ycrV8 RV8RoaI_SlEMC5CEQ3ms HV01LldvyEqRHHy0hljF wP9HMsqy6b96l2HBRbgb jj0BrgkBpq72EXwWuBh5 Xjxpb8u_H96dZt4r1eF6 z-1">
-        <div className="SGCI_v4dZasZ65DtKHsW _chPjFVKOPRcMolL9C9r QTzX2Cr9jhY6WXuEsiB_">
-          <h1 className="mb-4 text-2xl text-center font-bold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
+    <div className="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32">
+      <img
+        src={image}
+        alt=""
+        className="absolute inset-0 -z-10 h-full w-full object-cover object-right md:object-center"
+      />
+      <div className="absolute top-0 left-0 w-full h-full bg-black opacity-85 z-10"></div>
+      <div
+        className="hidden sm:absolute sm:-top-10 sm:right-1/2 sm:-z-10 sm:mr-10 sm:block sm:transform-gpu sm:blur-3xl"
+        aria-hidden="true"
+      >
+        <div
+          className="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-tr from-[#ff4694] to-[#776fff] opacity-20"
+          style={{
+            clipPath:
+              'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+          }}
+        />
+      </div>
+      <div
+        className="absolute -top-52 left-1/2 -z-10 -translate-x-1/2 transform-gpu blur-3xl sm:top-[-28rem] sm:ml-16 sm:translate-x-0 sm:transform-gpu"
+        aria-hidden="true"
+      >
+        <div
+          className="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-tr from-[#ff4694] to-[#776fff] opacity-20"
+          style={{
+            clipPath:
+              'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+          }}
+        />
+      </div>
+      <div className="home flex flex-col items-center mx-auto max-w-7xl px-6 lg:px-8 z-20 relative">
+        <div className="mx-auto max-w-5xl lg:mx-0">
+          <h2 className="text-center text-3xl font-bold tracking-tight text-white sm:text-5xl">
             Если вы ищете идеальный{' '}
-            <span class="text-blue-600 dark:text-blue-500">
+            <span className="text-blue-600 dark:text-blue-500">
               способ добраться из одного города в другой
             </span>
-            , наш сервис предлагает вам лучшее решение.
-          </h1>
-          <p className="mb-4 text-center text-base font-normal text-gray-500 lg:text-lg sm:px-16 xl:px-48 dark:text-gray-400">
-            Здесь вы можете{' '}
-            <span class="underline underline-offset-3 decoration-1 decoration-blue-400 dark:decoration-blue-600">
-              найти или опубликовать информацию о попутном междугороднем
-              транспорте
-            </span>
-            , объединяя пассажиров и водителей для взаимовыгодных поездок.
+            , наш сервис предлагает вам лучшее решение
+          </h2>
+          <p className="text-center mt-10 mb-10 text-xl leading-8 text-gray-300">
+            Здесь вы можете найти или опубликовать информацию о попутном
+            междугороднем транспорте, объединяя пассажиров и водителей для
+            взаимовыгодных поездок.
           </p>
         </div>
         <SearchForm />
       </div>
-    </section>
+    </div>
   )
 }
 

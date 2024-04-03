@@ -1,0 +1,35 @@
+:where(.css-dev-only-do-not-override-14nchyr).ant-btn-primary {
+  box-shadow: none;
+}
+
+:where(.css-dev-only-do-not-override-42nv3w) a:hover {
+  color: white;
+}
+
+.ant-picker-now-btn {
+  background: #1677ff;
+  padding: 4px 7px;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.ant-picker-now-btn:hover {
+  background: #4096ff;
+  color: #fff;
+}
+
+.ant-picker-ok button {
+  background: #1677ff;
+  padding: 0px 7px;
+  border-radius: 4px;
+}
+.ant-picker {
+  display: flex;
+  flex: 1 1 auto;
+}
+:where(.css-dev-only-do-not-override-14nchyr).ant-picker-dropdown
+  .ant-picker-time-panel-column
+  > li.ant-picker-time-panel-cell-selected
+  .ant-picker-time-panel-cell-inner {
+  background: #1677ff;
+}

@@ -1,0 +1,51 @@
+.publication {
+  .ant-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  .ant-form-item-control-input-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  :where(.css-dev-only-do-not-override-42nv3w).ant-form-item
+    .ant-form-item-label {
+    overflow: visible;
+    white-space: normal;
+  }
+  .ant-input {
+    border-radius: 0 6px 6px 0;
+    outline: none;
+    appearance: none;
+    border: none;
+    border: 1px solid #d9d9d9;
+  }
+  .ant-input:hover {
+    border-color: #4096ff;
+  }
+  .ant-input:focus,
+  .ant-input:focus-within {
+    border: none;
+    box-shadow: none;
+    border: 1px solid #1677ff;
+  }
+  .contacts .ant-form-item-control-input-content {
+    flex-direction: column;
+  }
+  .contacts .ant-space-item:first-child {
+    width: 94%;
+  }
+  .ant-select-show-arrow {
+    width: 80px !important;
+  }
+  :where(.css-dev-only-do-not-override-42nv3w).ant-form-item {
+    margin-bottom: 0;
+  }
+  .ant-input-outlined {
+    font-size: 0.9rem;
+  }
+  .ant-select-selection-placeholder {
+    text-align: left;
+  }
+}

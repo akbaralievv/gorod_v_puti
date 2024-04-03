@@ -1,14 +1,52 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import CountrySelect from '../inputs/countrySelect/CountrySelect'
 import DatePickerSelect from '../inputs/datePickerSelect/DatePickerSelect'
 import NumberInput from '../inputs/numberInput/NumberInput'
+import { ConfigProvider, Select, Space } from 'antd'
+
+import './SearchForm.scss'
 
 function SearchForm() {
+  const [formValue, setFormValue] = useState({
+    from: '',
+    to: '',
+    time: '',
+    formattedTime: '',
+    numberOfPassengers: 1,
+    who: 'Водители',
+  })
+
+  const isFormValid =
+    formValue.from &&
+    formValue.to &&
+    formValue.time &&
+    formValue.formattedTime &&
+    formValue.numberOfPassengers &&
+    formValue.who
+
+  const handleFormValueChange = (name, value, dateString) => {
+    if (dateString)
+      return setFormValue((prev) => ({
+        ...prev,
+        [name]: value,
+        formattedTime: dateString,
+      }))
+
+    setFormValue((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const onSubmit = () => {
+    console.log(isFormValid)
+  }
+
   return (
     <div className="inline-flex justify-between gap-6 flex-wrap items-center p-4 mt-8 rounded bg-gray-800  text-white">
       <div className="inline-flex justify-between gap-x-3 flex-1">
-        <CountrySelect from={true} />
+        <CountrySelect
+          label="Откуда"
+          onChange={(value) => handleFormValueChange('from', value)}
+        />
         <svg
           className="w-8 h-8 text-gray-800 dark:text-white"
           aria-hidden="true"
@@ -27,14 +65,49 @@ function SearchForm() {
           />
         </svg>
 
-        <CountrySelect to={true} />
+        <CountrySelect
+          label="Куда"
+          onChange={(value) => handleFormValueChange('to', value)}
+        />
       </div>
-      <DatePickerSelect />
-      <NumberInput />
+      <DatePickerSelect
+        onChange={(value, dateString) =>
+          handleFormValueChange('time', value, dateString)
+        }
+      />
+      <NumberInput
+        onChange={(value) => handleFormValueChange('numberOfPassengers', value)}
+      />
+      <ConfigProvider
+        className="flex flex-auto"
+        theme={{
+          token: {
+            colorBgBase: 'rgb(55, 65, 81)',
+            colorTextBase: '#fff',
+            colorBorder: 'rgb(75, 85, 99)',
+            colorTextPlaceholder: 'rgba(255, 255, 255, 0.497)',
+          },
+        }}
+      >
+        <Space direction="vertical" size={12} className="flex flex-auto">
+          <Select
+            className="flex flex-auto min-w-[115px]"
+            defaultValue="Водители"
+            onChange={(value) =>
+              setFormValue((prev) => ({ ...prev, who: value }))
+            }
+          >
+            <Select.Option value="Водители">Водители</Select.Option>
+            <Select.Option value="Пассажиры">Пассажиры</Select.Option>
+          </Select>
+        </Space>
+      </ConfigProvider>
 
       <button
         type="submit"
-        className="flex-auto inline-flex items-center justify-center py-2.5 px-3 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        onClick={onSubmit}
+        disabled={!isFormValid}
+        className={`${!isFormValid ? 'cursor-not-allowed' : ''} flex-auto inline-flex items-center justify-center py-2.5 px-3 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
       >
         <svg
           className="w-4 h-4 me-2"

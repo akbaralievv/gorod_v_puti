@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 
-import { baseSplitApi } from '../services/baseSplitApi'
+import { baseApiAppwrite, baseApiSuggest } from '../services/baseSplitApi'
 import getUser from './slices/account/getUser'
 import isAuthUser from './slices/account/isAuthUser'
 import login from './slices/account/login'
@@ -15,7 +15,8 @@ import getFile from './slices/files/getFile'
 
 export const store = configureStore({
   reducer: {
-    [baseSplitApi.reducerPath]: baseSplitApi.reducer,
+    [baseApiAppwrite.reducerPath]: baseApiAppwrite.reducer,
+    [baseApiSuggest.reducerPath]: baseApiSuggest.reducer,
     login,
     register,
     logout,
@@ -29,7 +30,10 @@ export const store = configureStore({
   },
 
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(baseSplitApi.middleware),
+    getDefaultMiddleware().concat(
+      baseApiAppwrite.middleware,
+      baseApiSuggest.middleware,
+    ),
 })
 
 setupListeners(store.dispatch)

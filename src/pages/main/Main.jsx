@@ -6,10 +6,9 @@ import {
   useCreateDriverCollectionMutation,
   useGetDriverCollectionQuery,
 } from '../../services/databases/driverCollection'
-import './Main.css'
 
 import HomeSection from '../../layouts/sections/homeSection/HomeSection'
-import CreatePublicSection from '../../layouts/sections/createPublicSection/CreatePublicSection'
+import PublicationSection from '../../layouts/sections/publicationSection/PublicationSection'
 
 function Main() {
   const { data, error, isLoading } = useGetDriverCollectionQuery()
@@ -31,7 +30,7 @@ function Main() {
   return (
     <div className="flex-1 _neKTiNR9ODo9dbROzCM dark">
       <HomeSection />
-      <CreatePublicSection />
+      <PublicationSection />
     </div>
   )
 }

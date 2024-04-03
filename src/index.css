@@ -2,3 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+.ant-select-selection-search-input:focus {
+  outline: none;
+  border: 1px solid transparent;
+  box-shadow: none;
+}
+:where(.css-dev-only-do-not-override-17p8957).ant-select-dropdown {
+  width: auto !important;
+  max-width: 400px;
+}
