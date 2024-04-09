@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-
-import CountrySelect from '../inputs/countrySelect/CountrySelect'
-import DatePickerSelect from '../inputs/datePickerSelect/DatePickerSelect'
-import NumberInput from '../inputs/numberInput/NumberInput'
 import { ConfigProvider, Select, Space } from 'antd'
+
+import CountrySelect from '../../inputs/countrySelect/CountrySelect'
+import DatePickerSelect from '../../inputs/datePickerSelect/DatePickerSelect'
+import NumberInput from '../../inputs/numberInput/NumberInput'
 
 import './SearchForm.scss'
 

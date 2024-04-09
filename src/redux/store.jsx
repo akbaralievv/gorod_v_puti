@@ -12,6 +12,8 @@ import updatePassword from './slices/account/updatePassword'
 import createFile from './slices/files/createFile'
 import listFiles from './slices/files/listFiles'
 import getFile from './slices/files/getFile'
+import getImage from './slices/files/getImage'
+import saveStateFile from './slices/files/saveStateFile'
 
 export const store = configureStore({
   reducer: {
@@ -27,6 +29,8 @@ export const store = configureStore({
     getUser,
     isAuthUser,
     getFile,
+    getImage,
+    saveStateFile,
   },
 
   middleware: (getDefaultMiddleware) =>

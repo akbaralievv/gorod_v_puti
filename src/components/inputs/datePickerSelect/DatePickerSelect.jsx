@@ -49,12 +49,13 @@ const DatePickerSelect = ({ onChange }) => {
         },
       }}
     >
-      <Space direction="vertical" size={12}>
+      <Space direction="vertical" size={12} className="flex flex-auto">
         <DatePicker
           showTime
           onChange={onChangeDate}
           disabledDate={disabledDate}
           format={getFormattedDate}
+          className="flex flex-auto"
         />
       </Space>
     </ConfigProvider>

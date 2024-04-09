@@ -4,6 +4,7 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom'
 
 import { getUserRequest } from '../utils/api'
 import ModalPreload from '../components/modalPreload/ModalPreload'
+import { clearUserData } from '../redux/slices/account/getUser'
 
 const PrivateRoutes = () => {
   const { userData, loading: getUserLoad } = useSelector(
@@ -20,9 +21,9 @@ const PrivateRoutes = () => {
       await dispatch(getUserRequest())
       setIsAuthInitialized(true)
     }
-
     checkAuthStatus()
-  }, [dispatch])
+    return () => dispatch(clearUserData())
+  }, [])
 
   if (!isAuthInitialized || getUserLoad || logoutLoad) {
     return <ModalPreload />

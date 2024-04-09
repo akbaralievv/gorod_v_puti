@@ -107,7 +107,7 @@ export const createFileRequest = createAsyncThunk(
   async ({ image, userId }, { rejectWithValue }) => {
     try {
       const response = await storage.createFile(bucket_id, userId, image)
-      return response
+      return response.$id
     } catch (error) {
       return rejectWithValue(error.code)
     }
@@ -128,6 +128,18 @@ export const listFilesRequest = createAsyncThunk(
 
 export const getFileRequest = createAsyncThunk(
   'getFile/getFileRequest',
+  async (file_id, { rejectWithValue }) => {
+    try {
+      const response = await storage.getFileView(bucket_id, file_id)
+      return response.href
+    } catch (error) {
+      return rejectWithValue(error.code)
+    }
+  },
+)
+
+export const getImageRequest = createAsyncThunk(
+  'getImage/getImageRequest',
   async (file_id, { rejectWithValue }) => {
     try {
       const response = await storage.getFileView(bucket_id, file_id)

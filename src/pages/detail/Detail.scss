@@ -1,0 +1,20 @@
+/* Стилизация полосы прокрутки для всех элементов и окна браузера */
+::-webkit-scrollbar {
+  width: 12px; /* ширина полосы прокрутки */
+}
+
+::-webkit-scrollbar-track {
+  background: #f3f4f6; /* цвет фона трека */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4b5563; /* цвет ползунка */
+  border-radius: 6px; /* закругление углов */
+  border: 3px solid #f3f4f6; /* граница и цвет границы */
+}
+
+/* Стилизация для Firefox */
+* {
+  scrollbar-width: thin; /* "auto" или "thin" */
+  scrollbar-color: #4b5563 #f3f4f6; /* цвет ползунка и трека */
+}

@@ -13,6 +13,10 @@ export default {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
         kurale: ['Kurale', 'sans-serif'],
       },
+      screens: {
+        custom: '950px',
+        575: '575px',
+      },
     },
   },
   plugins: [require('flowbite/plugin')],

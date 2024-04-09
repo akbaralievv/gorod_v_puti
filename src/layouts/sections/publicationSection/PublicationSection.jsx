@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import image from '../../../assets/images/main/publicationSection.jpg'
-import PublicationForm from '../../../components/publicationForm/PublicationForm'
+import PublicationForm from '../../../components/forms/publicationForm/PublicationForm'
 
 function PublicationSection() {
   const [isToggle, setIsToggle] = useState(false)
@@ -27,9 +27,9 @@ function PublicationSection() {
       </p>
 
       <div className="flex justify-between items-center flex-auto">
-        <img src={image} alt="" className="w-2/5" />
-        <ul className="w-7/12 hidden text-sm font-medium text-center text-gray-500 rounded-lg shadow sm:flex flex-col dark:divide-gray-700 dark:text-gray-400">
-          <li className="sm:flex w-full">
+        <img src={image} alt="" className="w-2/5 hidden custom:block" />
+        <ul className="w-full custom:w-7/12 text-sm font-medium text-center text-gray-500 rounded-lg shadow flex flex-col dark:divide-gray-700 dark:text-gray-400">
+          <li className="flex w-full">
             <div className="w-full focus-within:z-10">
               <a
                 onClick={(e) => handleToggle(e, false)}

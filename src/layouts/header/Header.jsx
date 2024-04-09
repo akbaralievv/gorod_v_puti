@@ -1,6 +1,6 @@
 import { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
@@ -12,10 +12,10 @@ import useImageChecker from '../../hooks/useImageChecker'
 import logo from '../../../public/logo white.png'
 
 const navigation = [
-  { name: 'Главная', href: '#', current: true },
-  { name: 'Транспорты', href: '#', current: false },
-  { name: 'Пассажиры', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
+  { name: 'Главная', to: '/', current: true },
+  { name: 'Транспорты', to: '/transports', current: false },
+  { name: 'Пассажиры', to: '/passengers', current: false },
+  { name: 'Избранные', to: '/favorites', current: false },
 ]
 
 function classNames(...classes) {
@@ -31,6 +31,9 @@ function Header() {
   const { isValid, isLoading } = useImageChecker(getFileData)
 
   const dispatch = useDispatch()
+  const location = useLocation()
+
+  const isActive = (path) => location.pathname === path
 
   const handleClickSignOut = (e) => {
     e.preventDefault()
@@ -66,19 +69,21 @@ function Header() {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <NavLink
                         key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? 'bg-gray-900 text-white'
-                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium',
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
+                        to={item.to}
+                        className={({ isActive }) =>
+                          classNames(
+                            isActive
+                              ? 'bg-gray-900 text-white'
+                              : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                            'rounded-md px-3 py-2 text-sm font-medium',
+                          )
+                        }
+                        aria-current={isActive(item.to) ? 'page' : undefined}
                       >
                         {item.name}
-                      </a>
+                      </NavLink>
                     ))}
                   </div>
                 </div>

@@ -13,3 +13,10 @@
   display: flex;
   flex: 1 1 auto;
 }
+@media (min-width: 575px) {
+  :where(
+      .css-dev-only-do-not-override-17p8957
+    ).ant-select.ant-select-in-form-item {
+    width: 200px;
+  }
+}

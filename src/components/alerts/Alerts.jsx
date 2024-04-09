@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import InfoAlert from './alertComponents/InfoAlert'
 import SuccessAlert from './alertComponents/SuccessAlert'
 import ErrorAlert from './alertComponents/ErrorAlert'
 import WarnAlert from './alertComponents/WarnAlert'
+import {
+  useCreateDriverCollectionMutation,
+  useGetDriverCollectionQuery,
+} from '../../services/databases/driverCollection'
+import {
+  useCreatePassengerCollectionMutation,
+  useGetPassengerCollectionQuery,
+} from '../../services/databases/passengerCollection'
+import { clearSave } from '../../redux/slices/files/saveStateFile'
 
 function Alerts() {
   const {
@@ -36,6 +45,8 @@ function Alerts() {
     updatePasswordData,
     loading: updatePasswordLoading,
   } = useSelector((state) => state.updatePassword)
+
+  const { data, isLoading, error } = useSelector((state) => state.saveStateFile)
 
   const [showAlert, setShowAlert] = useState({
     error: false,
@@ -126,6 +137,18 @@ function Alerts() {
       }
     }
   }, [resetPasswordLoading, resetPasswordError, resetPasswordData])
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (!isLoading) {
+      if (error) {
+        setAlert('error', 'Произошла непредвиденная ошибка.')
+      } else if (data) {
+        setAlert('success', 'Ваша форма опубликована.')
+      }
+    }
+    setTimeout(() => dispatch(clearSave()), 5000)
+  }, [data, isLoading, error])
 
   function setAlert(type, message) {
     setShowAlert((prev) => ({

@@ -10,16 +10,15 @@ const passengerCollection = baseApiAppwrite.injectEndpoints({
         `databases/${IDEAS_DATABASE_ID}/collections/${IDEAS_COLLECTION_ID}/documents`,
     }),
     createPassengerCollection: build.mutation({
-      url: `databases/${IDEAS_DATABASE_ID}/collections/${IDEAS_COLLECTION_ID}/documents`,
-      method: 'POST',
-      body: {
-        name: '',
-        to: '',
-        from: '',
-        car: '',
-        numberSeats: 0,
-        time: '',
-        contacts: '',
+      query({ id_unique, dataForm }) {
+        return {
+          url: `databases/${IDEAS_DATABASE_ID}/collections/${IDEAS_COLLECTION_ID}/documents`,
+          method: 'POST',
+          body: {
+            data: dataForm,
+            documentId: id_unique,
+          },
+        }
       },
     }),
   }),

@@ -68,13 +68,12 @@ export default function CountrySelect({
           <Form.Item name="gender" className="flex flex-auto">
             <AutoComplete
               options={autoCompleteOptions}
-              style={{ width: 200 }}
               onSelect={onSelect}
               onSearch={debounceFetcher}
               placeholder={label}
               value={value}
               allowClear
-              className="flex flex-auto"
+              className="flex flex-auto w-full 575:w-48 min-w-28 "
             />
           </Form.Item>
         </Form>

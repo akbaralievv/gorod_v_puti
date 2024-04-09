@@ -10,21 +10,13 @@ const driverCollection = baseApiAppwrite.injectEndpoints({
         `databases/${IDEAS_DATABASE_ID}/collections/${IDEAS_COLLECTION_ID}/documents?queries[]=orderDesc("from")`,
     }),
     createDriverCollection: build.mutation({
-      query(id) {
+      query({ id_unique, dataForm }) {
         return {
           url: `databases/${IDEAS_DATABASE_ID}/collections/${IDEAS_COLLECTION_ID}/documents`,
           method: 'POST',
           body: {
-            data: {
-              username: 'aqwuqeq',
-              to: 'toktogul',
-              from: 'jalalbal',
-              car: 'qw21eaas',
-              quantity: 2,
-              datetime: '12/01/2023',
-              contacts: '010221e3edsadasd',
-            },
-            documentId: id,
+            data: dataForm,
+            documentId: id_unique,
           },
         }
       },

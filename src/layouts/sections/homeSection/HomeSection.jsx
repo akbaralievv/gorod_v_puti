@@ -1,6 +1,6 @@
 import React from 'react'
 
-import SearchForm from '../../../components/searchForm/SearchForm'
+import SearchForm from '../../../components/forms/searchForm/SearchForm'
 
 import image from '../../../assets/images/main/mainImage.jpg'
 
