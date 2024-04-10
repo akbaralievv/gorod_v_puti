@@ -1,0 +1,9 @@
+@media (min-width: 575px) {
+  .searchCountry {
+    :where(
+        .css-dev-only-do-not-override-42nv3w
+      ).ant-select.ant-select-in-form-item {
+      width: 300px;
+    }
+  }
+}

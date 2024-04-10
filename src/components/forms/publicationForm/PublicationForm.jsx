@@ -89,9 +89,11 @@ const PublicationForm = ({ isToggle }) => {
   const { userData, loading: getUserLoad } = useSelector(
     (state) => state.getUser,
   )
-  const { createFileData, loading: createFileLoad } = useSelector(
-    (state) => state.createFile,
-  )
+  const {
+    createFileData,
+    loading: createFileLoad,
+    error: createFileError,
+  } = useSelector((state) => state.createFile)
   const [trigger] = useLazyGetSuggestCountryQuery()
   const { getImageData, loading: getImageLoad } = useSelector(
     (state) => state.getImage,
@@ -127,7 +129,8 @@ const PublicationForm = ({ isToggle }) => {
   )
 
   const autoCompleteOptions = useMemo(() => {
-    return options?.map((item) => ({
+    return options?.map((item, index) => ({
+      key: index,
       value: `${item.title.text}${item.subtitle ? `, ${item.subtitle.text}` : ''}`,
       label: `${item.title.text}${item.subtitle ? `, ${item.subtitle.text}` : ''}`,
     }))
@@ -136,9 +139,10 @@ const PublicationForm = ({ isToggle }) => {
   const onChangeDate = (_, dateString) => setDateString(dateString)
 
   const preparingFormData = (data) => {
-    const newFormatMainPhone = `${data.prefixPhone?.slice(1)}${data.mainPhone}`
+    const newFormatMainPhone = `${data.prefixPhone?.slice(1)}${data.mainPhone?.replace(/^0+/, '')}`
     const newFormatSubPhones = data.subPhone?.map(
-      (item) => `${item.prefix ? item.prefix?.slice(1) : ''}${item.phone}`,
+      (item) =>
+        `${item.prefix ? item.prefix?.slice(1) : ''}${item.phone?.replace(/^0+/, '')}`,
     )
     if (isToggle) {
       return {
@@ -282,7 +286,7 @@ const PublicationForm = ({ isToggle }) => {
           {isToggle ? (
             <div className="flex items-center gap-x-3">
               <Form.Item name="numberOfPassengers">
-                <InputNumber min={1} max={7} />
+                <InputNumber min={1} max={11} />
               </Form.Item>
               <p>Пассажир</p>
             </div>
@@ -402,7 +406,7 @@ const PublicationForm = ({ isToggle }) => {
             <Form.List name="subPhone">
               {(subFields, { add, remove }) => (
                 <>
-                  {subFields.map(({ key, name }, index) => (
+                  {subFields?.map(({ key, name }, index) => (
                     <Space key={key} className="flex">
                       <Form.Item
                         name={[name, 'phone']}
@@ -459,20 +463,22 @@ const PublicationForm = ({ isToggle }) => {
             htmlType="submit"
             className="flex items-center justify-center min-w-32 min-h-8"
             disabled={
-              passengerLoading ||
-              driverLoading ||
-              createFileLoad ||
-              isFileUploading ||
-              getImageLoad ||
-              isLoading
+              !createFileError &&
+              (passengerLoading ||
+                driverLoading ||
+                createFileLoad ||
+                isFileUploading ||
+                getImageLoad ||
+                isLoading)
             }
           >
-            {passengerLoading ||
-            driverLoading ||
-            createFileLoad ||
-            getImageLoad ||
-            isLoading ||
-            isFileUploading ? (
+            {!createFileError &&
+            (passengerLoading ||
+              driverLoading ||
+              createFileLoad ||
+              getImageLoad ||
+              isLoading ||
+              isFileUploading) ? (
               <Spin />
             ) : (
               'Опубликовать'

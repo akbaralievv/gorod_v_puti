@@ -6,6 +6,8 @@ import ScrollToTopButton from './components/buttons/scrollToTopButton/ScrollToTo
 import PrivateRoutes from './hoc/PrivateRoutes'
 import Layout from './hoc/Layout'
 import ModalPreload from './components/modalPreload/ModalPreload'
+import Favorites from './pages/favorites/Favorites'
+import Profile from './pages/profile/Profile'
 
 const Login = lazy(() => import('./pages/login/Login'))
 const Main = lazy(() => import('./pages/main/Main'))
@@ -35,6 +37,8 @@ function App() {
               <Route path="/passengers" element={<Passengers />} />
               <Route path="/transports/:id" element={<Detail />} />
               <Route path="/passengers/:id" element={<Detail />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/profile" element={<Profile />} />
             </Route>
           </Route>
           <Route path="/*" element={<NotFound />} />

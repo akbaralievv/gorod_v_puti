@@ -4,7 +4,6 @@ import ruRU from 'antd/lib/locale/ru_RU'
 
 const Paginate = ({ page, setCurrentPage, count, itemsPerPage }) => {
   const onChange = (page) => {
-    console.log(page)
     setCurrentPage(page)
   }
 

@@ -47,6 +47,7 @@ function Alerts() {
   } = useSelector((state) => state.updatePassword)
 
   const { data, isLoading, error } = useSelector((state) => state.saveStateFile)
+  const { error: fileError } = useSelector((state) => state.createFile)
 
   const [showAlert, setShowAlert] = useState({
     error: false,
@@ -149,6 +150,13 @@ function Alerts() {
     }
     setTimeout(() => dispatch(clearSave()), 5000)
   }, [data, isLoading, error])
+
+  useEffect(() => {
+    if (fileError) {
+      setAlert('error', 'Произошла непредвиденная ошибка.')
+    }
+    setTimeout(() => dispatch(clearSave()), 5000)
+  }, [fileError])
 
   function setAlert(type, message) {
     setShowAlert((prev) => ({

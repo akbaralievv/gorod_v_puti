@@ -60,7 +60,7 @@ function YandexMap({ data }) {
     <YMaps query={{ apikey: apiKey, load: 'package.full' }} onLoad={setYmaps}>
       <Map
         defaultState={{
-          center: coordinatesA,
+          center: coordinatesA || coordinatesB || [42.875969, 74.603701],
           zoom: 12,
           controls: [
             'zoomControl',

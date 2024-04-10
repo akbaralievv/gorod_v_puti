@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { ConfigProvider, Select, Space } from 'antd'
+import { useNavigate } from 'react-router-dom'
 
 import CountrySelect from '../../inputs/countrySelect/CountrySelect'
 import DatePickerSelect from '../../inputs/datePickerSelect/DatePickerSelect'
@@ -11,8 +12,7 @@ function SearchForm() {
   const [formValue, setFormValue] = useState({
     from: '',
     to: '',
-    time: '',
-    formattedTime: '',
+    formattedDateTime: '',
     numberOfPassengers: 1,
     who: 'Водители',
   })
@@ -20,24 +20,22 @@ function SearchForm() {
   const isFormValid =
     formValue.from &&
     formValue.to &&
-    formValue.time &&
-    formValue.formattedTime &&
+    formValue.formattedDateTime &&
     formValue.numberOfPassengers &&
     formValue.who
 
-  const handleFormValueChange = (name, value, dateString) => {
-    if (dateString)
-      return setFormValue((prev) => ({
-        ...prev,
-        [name]: value,
-        formattedTime: dateString,
-      }))
-
+  const handleFormValueChange = (name, value) => {
     setFormValue((prev) => ({ ...prev, [name]: value }))
   }
 
+  const navigate = useNavigate()
+
   const onSubmit = () => {
-    console.log(isFormValid)
+    if (formValue.who === 'Водители') {
+      navigate('/transports', { state: formValue })
+    } else if (formValue.who === 'Пассажиры') {
+      navigate('/passengers', { state: formValue })
+    }
   }
 
   return (
@@ -72,7 +70,7 @@ function SearchForm() {
       </div>
       <DatePickerSelect
         onChange={(value, dateString) =>
-          handleFormValueChange('time', value, dateString)
+          handleFormValueChange('formattedDateTime', dateString)
         }
       />
       <NumberInput

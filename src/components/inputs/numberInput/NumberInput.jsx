@@ -26,7 +26,7 @@ const NumberInput = ({ onChange }) => {
         <Space direction="vertical" size={12} className="flex-auto">
           <InputNumber
             min={1}
-            max={7}
+            max={11}
             defaultValue={1}
             onChange={onChange}
             className="flex-auto"

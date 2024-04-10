@@ -9,6 +9,7 @@ export default function CountrySelect({
   label,
   onChange,
   debounceTimeout = 1000,
+  isSearhCountry,
 }) {
   const [trigger, { data, error, isLoading }] = useLazyGetSuggestCountryQuery()
 
@@ -54,18 +55,22 @@ export default function CountrySelect({
   return (
     <ConfigProvider
       className="flex flex-auto"
-      theme={{
-        token: {
-          colorBgBase: 'rgb(55, 65, 81)',
-          colorTextBase: '#fff',
-          colorBorder: 'rgb(75, 85, 99)',
-          colorTextPlaceholder: 'rgba(255, 255, 255, 0.497)',
-        },
-      }}
+      theme={
+        !isSearhCountry
+          ? {
+              token: {
+                colorBgBase: 'rgb(55, 65, 81)',
+                colorTextBase: '#fff',
+                colorBorder: 'rgb(75, 85, 99)',
+                colorTextPlaceholder: 'rgba(255, 255, 255, 0.497)',
+              },
+            }
+          : false
+      }
     >
       <Space direction="vertical" size={12} className="flex flex-auto">
         <Form className="flex flex-auto">
-          <Form.Item name="gender" className="flex flex-auto">
+          <Form.Item name="gender" className="flex flex-auto mb-0">
             <AutoComplete
               options={autoCompleteOptions}
               onSelect={onSelect}

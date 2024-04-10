@@ -1,14 +1,66 @@
-import React from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-
+import { useDispatch } from 'react-redux'
+import { Dialog, Transition } from '@headlessui/react'
+import { XMarkIcon } from '@heroicons/react/24/outline'
 import YandexMap from '../../components/yandexMap/YandexMap'
+
+import { setIsFavorites } from '../../redux/slices/files/isFavorites'
+
 import './Detail.scss'
 
 function Detail() {
+  const [like, setLike] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   const location = useLocation()
+  const dispatch = useDispatch()
   const data = location.state
 
-  console.log(data)
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || []
+    const isLiked = favorites?.find((favorite) => favorite.$id === data.$id)
+    setLike(isLiked)
+  }, [data])
+
+  useEffect(() => {
+    if (like) {
+      dispatch(setIsFavorites(true))
+    } else {
+      dispatch(setIsFavorites(false))
+    }
+  }, [like])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  const localUpdate = (type) => {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || []
+
+    let updatedFavorites = [...favorites]
+
+    if (type) {
+      const existingIndex = favorites?.findIndex(
+        (favorite) => favorite.$id === data.$id,
+      )
+      if (existingIndex === -1) {
+        updatedFavorites = [...favorites, data]
+      }
+    } else {
+      const filteredFavorites = favorites?.filter(
+        (favorite) => favorite.$id !== data.$id,
+      )
+      updatedFavorites = [...filteredFavorites]
+    }
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites))
+  }
+  const handleLike = (e) => {
+    e.stopPropagation()
+    localUpdate(!like)
+    setLike(!like)
+  }
+
   const parserSubPhones = () => {
     if (data.subPhones) {
       return JSON.parse(data.subPhones)
@@ -33,32 +85,122 @@ function Detail() {
     }
   }
 
+  const openModal = () => setIsModalOpen(true)
+
+  const closeModal = () => setIsModalOpen(false)
+
   return (
     <div className="flex-1 py-16 mx-auto max-w-7xl px-6 lg:px-8">
       <div className="flex gap-6 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-6">
-        <div className="lg:col-span-3 w-5/12 lg:sticky top-0 text-center min-w-[330px]">
-          <div className="px-4 py-10 rounded-xl h-full shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] relative">
-            <img
-              src={data.image}
-              alt="Product"
-              className="rounded object-cover"
-            />
-            <button type="button" className="absolute top-4 right-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20px"
-                fill="#ccc"
-                className="mr-1 hover:fill-[#333]"
-                viewBox="0 0 64 64"
+        {data.image && (
+          <>
+            <div className="lg:col-span-3 w-5/12 lg:sticky top-0 text-center min-w-[330px]">
+              <div
+                onClick={openModal}
+                className="cursor-pointer px-4 py-10 rounded-xl h-full shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] relative"
               >
-                <path
-                  d="M45.5 4A18.53 18.53 0 0 0 32 9.86 18.5 18.5 0 0 0 0 22.5C0 40.92 29.71 59 31 59.71a2 2 0 0 0 2.06 0C34.29 59 64 40.92 64 22.5A18.52 18.52 0 0 0 45.5 4ZM32 55.64C26.83 52.34 4 36.92 4 22.5a14.5 14.5 0 0 1 26.36-8.33 2 2 0 0 0 3.27 0A14.5 14.5 0 0 1 60 22.5c0 14.41-22.83 29.83-28 33.14Z"
-                  data-original="#000000"
-                ></path>
-              </svg>
-            </button>
-          </div>
-        </div>
+                <img
+                  src={data.image}
+                  alt="Product"
+                  className="rounded object-cover"
+                />
+                <button
+                  type="button"
+                  className="absolute top-4 right-4"
+                  onClick={handleLike}
+                >
+                  {!like ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6 hover:fill-[#333]"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  )}
+                </button>
+              </div>
+            </div>
+            <Transition.Root show={isModalOpen} as={Fragment}>
+              <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+                >
+                  <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                </Transition.Child>
+
+                <div className="fixed inset-0 z-10 overflow-y-auto">
+                  <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                    <Transition.Child
+                      as={Fragment}
+                      enter="ease-out duration-300"
+                      enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                      enterTo="opacity-100 translate-y-0 sm:scale-100"
+                      leave="ease-in duration-200"
+                      leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                      leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    >
+                      <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                        <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                          <div className="sm:flex sm:items-start">
+                            <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                              <div className="">
+                                <img
+                                  src={data.image}
+                                  alt={data.altText}
+                                  className="w-full"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                          <button
+                            type="button"
+                            className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                            onClick={closeModal}
+                          >
+                            Close
+                            <XMarkIcon
+                              className="ml-2 h-5 w-5"
+                              aria-hidden="true"
+                            />
+                          </button>
+                        </div>
+                      </Dialog.Panel>
+                    </Transition.Child>
+                  </div>
+                </div>
+              </Dialog>
+            </Transition.Root>
+          </>
+        )}
         <div className="lg:col-span-2 w-full overflow-x-auto">
           <ul className="flex flex-col max-h-96 flex-wrap gap-5">
             <li className="text-[#333] text-xl font-bold flex items-center gap-3">
@@ -187,24 +329,27 @@ function Detail() {
                 {getPlaceWord(data.numberOfPassengers)}
               </p>
             </li>
-            <li className="text-[#333] text-xl font-bold flex items-center gap-3">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" />
-                <circle cx="7" cy="17" r="2" /> <circle cx="17" cy="17" r="2" />{' '}
-                <path d="M5 17h-2v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5" />
-              </svg>
+            {data.auto && (
+              <li className="text-[#333] text-xl font-bold flex items-center gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" />
+                  <circle cx="7" cy="17" r="2" />{' '}
+                  <circle cx="17" cy="17" r="2" />{' '}
+                  <path d="M5 17h-2v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5" />
+                </svg>
 
-              <p className="break-words whitespace-normal max-w-[200px]">
-                {data.auto}
-              </p>
-            </li>
+                <p className="break-words whitespace-normal max-w-[200px]">
+                  {data.auto}
+                </p>
+              </li>
+            )}
             <li className="text-[#333] text-xl font-bold flex items-start gap-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -226,7 +371,7 @@ function Detail() {
                   {data.mainPhone}
                 </p>
                 {parserSubPhones() &&
-                  parserSubPhones().map((item, id) => (
+                  parserSubPhones()?.map((item, id) => (
                     <p
                       key={id}
                       className="break-words whitespace-normal max-w-[200px]"
