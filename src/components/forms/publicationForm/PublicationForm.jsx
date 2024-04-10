@@ -136,10 +136,9 @@ const PublicationForm = ({ isToggle }) => {
   const onChangeDate = (_, dateString) => setDateString(dateString)
 
   const preparingFormData = (data) => {
-    const newFormatMainPhone = `${data.prefixPhone?.slice(1)}${data.mainPhone?.replace(/^0+/, '')}`
+    const newFormatMainPhone = `${data.prefixPhone?.slice(1)}${data.mainPhone}`
     const newFormatSubPhones = data.subPhone?.map(
-      (item) =>
-        `${item.prefix ? item.prefix?.slice(1) : ''}${item.phone?.replace(/^0+/, '')}`,
+      (item) => `${item.prefix ? item.prefix?.slice(1) : ''}${item.phone}`,
     )
     if (isToggle) {
       return {
