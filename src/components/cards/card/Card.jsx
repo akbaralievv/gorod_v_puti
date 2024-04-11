@@ -58,12 +58,12 @@ function Card({ data }) {
   const closeModal = () => setIsModalOpen(false)
 
   return (
-    <div className="w-auto max-w-md flex flex-col flex-auto self-start rounded-lg bg-white text-surface shadow-lg dark:bg-surface-dark dark:text-white sm:shrink-0 sm:grow sm:basis-0">
+    <div className="w-full 500:w-auto md:max-w-full max-w-md flex flex-col flex-auto self-center justify-self-center rounded-lg bg-white text-surface shadow-lg dark:bg-surface-dark dark:text-white sm:shrink-0 sm:grow sm:basis-0">
       {data.image && (
         <>
           <div className="p-6 rounded-t-lg">
             <div
-              className="relative  rounded-sm flex justify-center items-center cursor-pointer"
+              className="rounded-sm flex justify-center items-center cursor-pointer"
               onClick={openModal}
             >
               <img
@@ -71,41 +71,6 @@ function Card({ data }) {
                 src={data.image}
                 alt="Hollywood Sign on The Hill"
               />
-              <button
-                type="button"
-                className="absolute z-10 top-0 right-0"
-                onClick={handleLike}
-              >
-                {!like ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6 hover:fill-[#333]"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                )}
-              </button>
             </div>
           </div>
           <Transition.Root show={isModalOpen} as={Fragment}>
@@ -168,35 +133,39 @@ function Card({ data }) {
           </Transition.Root>
         </>
       )}
-      <ul className="px-6 pb-6 flex flex-col gap-4">
+      <ul className="relative px-6 pb-6 flex flex-col gap-4">
         <li className="flex items-end gap-2">
-          <h5 className="text-xl font-medium">Откуда:</h5>
-          <p className="text-xl truncate">{data.from}</p>
+          <h5 className="text-lg 360:text-xl font-medium">Откуда:</h5>
+          <p className="text-lg 360:text-xl truncate">{data.from}</p>
         </li>
         <li className="flex items-end gap-2">
-          <h5 className="text-xl font-medium">Куда:</h5>
-          <p className="text-xl truncate">{data.to}</p>
+          <h5 className="text-lg 360:text-xl font-medium">Куда:</h5>
+          <p className="text-lg 360:text-xl truncate">{data.to}</p>
         </li>
         <li className="flex items-end gap-2">
-          <h5 className="text-xl font-medium">Когда:</h5>
-          <p className="text-xl truncate">{data.formattedDateTime}</p>
+          <h5 className="text-lg 360:text-xl font-medium">Когда:</h5>
+          <p className="text-lg 360:text-xl truncate">
+            {data.formattedDateTime}
+          </p>
         </li>
         <li className="flex items-end gap-2">
-          <h5 className="text-xl font-medium">
+          <h5 className="text-lg 360:text-xl font-medium">
             Количество {data.who === 'Водитель' ? 'мест' : 'человек'}:
           </h5>
-          <p className="text-xl truncate">{data.numberOfPassengers}</p>
+          <p className="text-lg 360:text-xl truncate">
+            {data.numberOfPassengers}
+          </p>
         </li>
         {data.auto && (
           <li className="flex items-end gap-2">
-            <h5 className="text-xl font-medium">Машина:</h5>
-            <p className="text-xl truncate">{data.auto}</p>
+            <h5 className="text-lg 360:text-xl font-medium">Машина:</h5>
+            <p className="text-lg 360:text-xl truncate">{data.auto}</p>
           </li>
         )}
         {data.comment && (
           <li className="flex items-end gap-2">
-            <h5 className="text-xl font-medium">Комментарий:</h5>
-            <p className="text-xl truncate">{data.comment}</p>
+            <h5 className="text-lg 360:text-xl font-medium">Комментарий:</h5>
+            <p className="text-lg 360:text-xl truncate">{data.comment}</p>
           </li>
         )}
         <li className="flex justify-end">
@@ -223,6 +192,41 @@ function Card({ data }) {
             </svg>
           </NavLink>
         </li>
+        <button
+          type="button"
+          className="absolute z-10 left-[21px] bottom-[22px]"
+          onClick={handleLike}
+        >
+          {!like ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6 hover:fill-[#333]"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
+              />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                fillRule="evenodd"
+                d="M6.32 2.577a49.255 49.255 0 0 1 11.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 0 1-1.085.67L12 18.089l-7.165 3.583A.75.75 0 0 1 3.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          )}
+        </button>
       </ul>
     </div>
   )

@@ -24,7 +24,7 @@ function Profile() {
       .join('.')
   }
   return (
-    <div className="flex-1 py-16 mx-auto max-w-7xl px-6 lg:px-8">
+    <div className="flex-1 py-16 360:mx-auto max-w-7xl px-6 lg:px-8 w-full">
       <div className="px-4 sm:px-0">
         <h3 className="text-base font-semibold leading-7 text-gray-900">
           Ваши личные данные

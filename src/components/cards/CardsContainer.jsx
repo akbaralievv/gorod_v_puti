@@ -8,7 +8,7 @@ function CardsContainer({ data, isLoading, error, who }) {
   ))
 
   return (
-    <div className="gap-12 grid-cols-1 sm:grid md:grid-cols-2 lg:grid-cols-3 mt-14">
+    <div className="gap-12 grid-cols-1 grid md:grid-cols-2 lg:grid-cols-3 mt-14">
       {isLoading ? (
         skeleton
       ) : error || data.length === 0 ? (

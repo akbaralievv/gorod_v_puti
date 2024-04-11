@@ -27,17 +27,18 @@ function SearchCountry({ setSearchCountryValue, setState }) {
     })
     setSearchCountryValue('')
   }
+
   return (
     <div className="searchCountry flex justify-center">
-      <div className="inline-flex justify-between gap-6 flex-wrap items-center p-4 mt-12 rounded shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)]">
-        <div className="inline-flex justify-between gap-x-3 flex-1 items-center">
+      <div className="flex-col 360:flex-row inline-flex justify-between gap-6 flex-wrap items-center p-4 mt-12 rounded shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)]">
+        <div className="flex-col 360:flex-row inline-flex justify-between gap-x-3 flex-1 items-center">
           <CountrySelect
             label="Откуда"
             onChange={(value) => handleFormValueChange('from', value)}
             isSearhCountry={true}
           />
           <svg
-            className="w-8 h-8 text-gray-800 dark:text-white"
+            className="rotate-90 360:rotate-0 w-8 h-8 text-gray-800 dark:text-white"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"

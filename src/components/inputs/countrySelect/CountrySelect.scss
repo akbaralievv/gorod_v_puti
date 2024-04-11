@@ -16,6 +16,9 @@
 @media (min-width: 575px) {
   :where(
       .css-dev-only-do-not-override-17p8957
+    ).ant-select.ant-select-in-form-item,
+  :where(
+      .css-dev-only-do-not-override-42nv3w
     ).ant-select.ant-select-in-form-item {
     width: 200px;
   }

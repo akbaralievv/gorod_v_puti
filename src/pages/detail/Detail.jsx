@@ -90,11 +90,11 @@ function Detail() {
   const closeModal = () => setIsModalOpen(false)
 
   return (
-    <div className="flex-1 py-16 mx-auto max-w-7xl px-6 lg:px-8">
-      <div className="flex gap-6 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-6">
+    <div className="flex-1 w-full py-16 mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="flex flex-wrap 945:flex-nowrap gap-6 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] p-6">
         {data.image && (
           <>
-            <div className="lg:col-span-3 w-5/12 lg:sticky top-0 text-center min-w-[330px]">
+            <div className="lg:col-span-3 w-full 945:w-5/12  top-0 text-center 430:min-w-[330px]">
               <div
                 onClick={openModal}
                 className="cursor-pointer px-4 py-10 rounded-xl h-full shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] relative"
@@ -106,7 +106,7 @@ function Detail() {
                 />
                 <button
                   type="button"
-                  className="absolute top-4 right-4"
+                  className="absolute top-[4px] right-[4px]"
                   onClick={handleLike}
                 >
                   {!like ? (
@@ -201,16 +201,16 @@ function Detail() {
             </Transition.Root>
           </>
         )}
-        <div className="lg:col-span-2 w-full overflow-x-auto">
+        <div className="lg:col-span-2 w-full overflow-x-auto pb-[10px]">
           <ul className="flex flex-col max-h-96 flex-wrap gap-5">
-            <li className="text-[#333] text-xl font-bold flex items-center gap-3">
+            <li className="text-[#333] text-md 537:text-lg 590:text-xl font-bold flex items-center gap-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="min-w-6 max-w-6"
               >
                 <path
                   strokeLinecap="round"
@@ -223,14 +223,14 @@ function Detail() {
               </p>
             </li>
             {data.username && (
-              <li className="text-[#333] text-xl font-bold flex items-center gap-3">
+              <li className="text-[#333] text-md 537:text-lg 590:text-xl font-bold flex items-center gap-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="min-w-6 max-w-6"
                 >
                   <path
                     strokeLinecap="round"
@@ -244,14 +244,14 @@ function Detail() {
                 </p>
               </li>
             )}
-            <li className="text-[#333] text-xl font-bold flex items-center gap-3">
+            <li className="text-[#333] text-md 537:text-lg 590:text-xl font-bold flex items-center gap-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="min-w-6 max-w-6"
               >
                 <path
                   strokeLinecap="round"
@@ -265,7 +265,7 @@ function Detail() {
                 />
               </svg>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <p className="break-words whitespace-normal max-w-[300px]">
                   {data.from}
                 </p>
@@ -275,7 +275,7 @@ function Detail() {
                   viewBox="0 0 24 24"
                   strokeWidth={2}
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="min-w-6 max-w-6"
                 >
                   <path
                     strokeLinecap="round"
@@ -288,14 +288,14 @@ function Detail() {
                 </p>
               </div>
             </li>
-            <li className="text-[#333] text-xl font-bold flex items-center gap-3">
+            <li className="text-[#333] text-md 537:text-lg 590:text-xl font-bold flex items-center gap-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="min-w-6 max-w-6"
               >
                 <path
                   strokeLinecap="round"
@@ -308,14 +308,14 @@ function Detail() {
                 {data.formattedDateTime}
               </p>
             </li>
-            <li className="text-[#333] text-xl font-bold flex items-center gap-3">
+            <li className="text-[#333] text-md 537:text-lg 590:text-xl font-bold flex items-center gap-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="min-w-6 max-w-6"
               >
                 <path
                   strokeLinecap="round"
@@ -330,14 +330,14 @@ function Detail() {
               </p>
             </li>
             {data.auto && (
-              <li className="text-[#333] text-xl font-bold flex items-center gap-3">
+              <li className="text-[#333] text-md 537:text-lg 590:text-xl font-bold flex items-center gap-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="min-w-6 max-w-6"
                 >
                   <path stroke="none" d="M0 0h24v24H0z" />
                   <circle cx="7" cy="17" r="2" />{' '}
@@ -350,14 +350,14 @@ function Detail() {
                 </p>
               </li>
             )}
-            <li className="text-[#333] text-xl font-bold flex items-start gap-3">
+            <li className="text-[#333] text-md 537:text-lg 590:text-xl font-bold flex items-start gap-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="min-w-6 max-w-6"
               >
                 <path
                   strokeLinecap="round"
@@ -382,14 +382,14 @@ function Detail() {
               </div>
             </li>
             {data.comment && (
-              <li className="text-[#333] text-xl font-bold flex items-start gap-3">
+              <li className="text-[#333] text-md 537:text-lg 590:text-xl font-bold flex items-start gap-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-6 h-6"
+                  className="min-w-6 max-w-6"
                 >
                   <path
                     strokeLinecap="round"
