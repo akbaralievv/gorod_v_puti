@@ -181,7 +181,7 @@ function Header() {
                     item.current
                       ? 'bg-gray-900 text-white'
                       : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium cursor-pointer',
+                    `block rounded-md px-3 py-2 text-base font-medium cursor-pointer ${item.name === 'Избранные' ? 'relative' : ''}`,
                   )}
                   aria-current={item.current ? 'page' : undefined}
                 >
@@ -194,6 +194,11 @@ function Header() {
                     }}
                   >
                     {item.name}
+                    {item.name === 'Избранные' && (
+                      <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 rounded-full -top-2 -end-2">
+                        {badgeNumber}
+                      </div>
+                    )}
                   </NavLink>
                 </div>
               ))}
