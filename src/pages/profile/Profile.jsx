@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+
 import useImageChecker from '../../hooks/useImageChecker'
 
 function Profile() {
@@ -39,7 +40,7 @@ function Profile() {
             <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
               {isValid && !isLoading ? (
                 <img
-                  class="rounded-full "
+                  className="rounded-full "
                   src={getFileData}
                   alt="image description"
                 />

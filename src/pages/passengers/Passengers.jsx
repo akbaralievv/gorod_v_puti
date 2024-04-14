@@ -14,13 +14,13 @@ function Passengers() {
     from: '',
     to: '',
   })
-  const { data, error, isLoading } = useGetPassengerCollectionQuery(
-    state
+  const { data, error, isLoading } = useGetPassengerCollectionQuery({
+    search: state
       ? state
       : searchCountryValue.from || searchCountryValue.to
         ? searchCountryValue
         : '',
-  )
+  })
   const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
@@ -42,7 +42,7 @@ function Passengers() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  }, [])
+  }, [currentPage])
 
   return (
     <div className="flex-1 py-16 mx-auto max-w-7xl px-6 lg:px-8">
@@ -55,7 +55,6 @@ function Passengers() {
         data={currentItemsTransports}
         error={error}
         isLoading={isLoading}
-        who="пассажир"
       />
       {!isLoading && currentItemsTransports.length > 0 && (
         <Paginate

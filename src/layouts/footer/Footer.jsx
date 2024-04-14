@@ -45,6 +45,11 @@ function Footer() {
                     Избранные
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink to="/myPublications" className="hover:underline">
+                    Мои посты
+                  </NavLink>
+                </li>
               </ul>
             </div>
             <div className="max-w-48">

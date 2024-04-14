@@ -15,13 +15,13 @@ function Transports() {
     to: '',
   })
 
-  const { data, error, isLoading } = useGetDriverCollectionQuery(
-    state
+  const { data, error, isLoading } = useGetDriverCollectionQuery({
+    search: state
       ? state
       : searchCountryValue.from || searchCountryValue.to
         ? searchCountryValue
         : '',
-  )
+  })
   const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
@@ -43,7 +43,7 @@ function Transports() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  }, [])
+  }, [currentPage])
 
   return (
     <div className="flex-1 py-16 mx-auto max-w-7xl px-6 lg:px-8">
@@ -56,7 +56,6 @@ function Transports() {
         data={currentItemsTransports}
         error={error}
         isLoading={isLoading}
-        who="водитель"
       />
       {!isLoading && currentItemsTransports.length > 0 && (
         <Paginate

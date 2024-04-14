@@ -1,8 +1,8 @@
-:where(.css-dev-only-do-not-override-14nchyr).ant-btn-primary {
+.ant-btn-primary {
   box-shadow: none;
 }
 
-:where(.css-dev-only-do-not-override-42nv3w) a:hover {
+.ant-picker-dropdown a:hover {
   color: white;
 }
 
@@ -27,9 +27,10 @@
   display: flex;
   flex: 1 1 auto;
 }
-:where(.css-dev-only-do-not-override-14nchyr).ant-picker-dropdown
+.ant-picker-dropdown
   .ant-picker-time-panel-column
   > li.ant-picker-time-panel-cell-selected
   .ant-picker-time-panel-cell-inner {
   background: #1677ff;
+  color: white;
 }

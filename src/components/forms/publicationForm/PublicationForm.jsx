@@ -23,8 +23,14 @@ import { ID } from 'appwrite'
 import './PublicationForm.scss'
 import icon from '../../../assets/icons/main/group.png'
 import { useLazyGetSuggestCountryQuery } from '../../../services/suggest/suggestCountry'
-import { useCreateDriverCollectionMutation } from '../../../services/databases/driverCollection'
-import { useCreatePassengerCollectionMutation } from '../../../services/databases/passengerCollection'
+import {
+  useCreateDriverCollectionMutation,
+  useUpdateDriverCollectionMutation,
+} from '../../../services/databases/driverCollection'
+import {
+  useCreatePassengerCollectionMutation,
+  useUpdatePassengersCollectionMutation,
+} from '../../../services/databases/passengerCollection'
 import { createFileRequest, getImageRequest } from '../../../utils/api'
 import useImageChecker from '../../../hooks/useImageChecker'
 import {
@@ -50,7 +56,7 @@ const PrefixSelector = (path) => {
   return (
     <Form.Item name={name} key={fieldKey} noStyle>
       <Select>
-        {['+996', '+997', '+998', '+999', '+7'].map((code, id) => (
+        {['+996', '+997', '+998', '+999'].map((code, id) => (
           <Option key={id} value={code}>
             {code}
           </Option>
@@ -77,7 +83,13 @@ const getFormattedDate = (value) => {
   return format(dayjs(value))
 }
 
-const PublicationForm = ({ isToggle }) => {
+const PublicationForm = ({
+  isToggle,
+  initialData,
+  closeFormModal,
+  passengersRefetch,
+  driverRefetch,
+}) => {
   const [
     createDriverDatabases,
     { data: driverData, isLoading: driverLoading, error: driverError },
@@ -89,12 +101,29 @@ const PublicationForm = ({ isToggle }) => {
   const { userData, loading: getUserLoad } = useSelector(
     (state) => state.getUser,
   )
+  const [
+    updatePassengerDatabases,
+    {
+      data: passengerUpdateData,
+      isLoading: passengerUpdateLoading,
+      error: passengerUpdateError,
+    },
+  ] = useUpdatePassengersCollectionMutation()
+  const [
+    updateDriverDatabases,
+    {
+      data: driverUpdateData,
+      isLoading: driverUpdateLoading,
+      error: driverUpdateError,
+    },
+  ] = useUpdateDriverCollectionMutation()
+  const [trigger] = useLazyGetSuggestCountryQuery()
+
   const {
     createFileData,
     loading: createFileLoad,
     error: createFileError,
   } = useSelector((state) => state.createFile)
-  const [trigger] = useLazyGetSuggestCountryQuery()
   const { getImageData, loading: getImageLoad } = useSelector(
     (state) => state.getImage,
   )
@@ -105,6 +134,7 @@ const PublicationForm = ({ isToggle }) => {
   const [valueIn, setValue] = useState('')
   const [dateString, setDateString] = useState('')
   const [isFileUploading, setIsFileUploading] = useState(false)
+  const [isDataChanged, setIsDataChanged] = useState(false)
 
   const fetchRef = useRef(0)
   const id_unique = ID.unique()
@@ -152,10 +182,13 @@ const PublicationForm = ({ isToggle }) => {
         from: data.from,
         numberOfPassengers: data.numberOfPassengers,
         datetime: data.time,
-        formattedDateTime: dateString,
+        formattedDateTime: initialData
+          ? initialData.formattedDateTime
+          : dateString,
         mainPhone: newFormatMainPhone,
         subPhones: JSON.stringify(newFormatSubPhones),
         comment: data?.comment,
+        user_id: userData.$id,
       }
     } else {
       return {
@@ -166,10 +199,13 @@ const PublicationForm = ({ isToggle }) => {
         auto: data.auto,
         numberOfPassengers: data.numberOfPassengers,
         datetime: data.time,
-        formattedDateTime: dateString,
+        formattedDateTime: initialData
+          ? initialData.formattedDateTime
+          : dateString,
         mainPhone: newFormatMainPhone,
         subPhones: JSON.stringify(newFormatSubPhones),
         comment: data.comment ?? '',
+        user_id: userData.$id,
       }
     }
   }
@@ -177,7 +213,18 @@ const PublicationForm = ({ isToggle }) => {
   const onFinish = (values) => {
     const data = preparingFormData(values)
     if (isToggle) {
-      return createPassengerDatabases({ id_unique, dataForm: data })
+      if (initialData) {
+        if (isDataChanged) {
+          return updatePassengerDatabases({
+            id_unique: initialData.$id,
+            dataForm: data,
+          })
+            .unwrap()
+            .then((payload) => passengersRefetch())
+        }
+      } else {
+        return createPassengerDatabases({ id_unique, dataForm: data })
+      }
     } else if (values.images && values.images.length > 0) {
       setIsFileUploading(true)
       return dispatch(
@@ -187,7 +234,18 @@ const PublicationForm = ({ isToggle }) => {
         }),
       )
     } else {
-      return createDriverDatabases({ id_unique, dataForm: data })
+      if (initialData) {
+        if (isDataChanged) {
+          return updateDriverDatabases({
+            id_unique: initialData.$id,
+            dataForm: data,
+          })
+            .unwrap()
+            .then((payload) => driverRefetch())
+        }
+      } else {
+        return createDriverDatabases({ id_unique, dataForm: data })
+      }
     }
   }
 
@@ -219,9 +277,31 @@ const PublicationForm = ({ isToggle }) => {
       let formData = preparingFormData(values)
       formData.image = getImageData
       if (isToggle) {
-        createPassengerDatabases({ id_unique, dataForm: formData })
+        if (initialData) {
+          if (isDataChanged) {
+            updatePassengerDatabases({
+              id_unique: initialData.$id,
+              dataForm: formData,
+            })
+              .unwrap()
+              .then((payload) => passengersRefetch())
+          }
+        } else {
+          createPassengerDatabases({ id_unique, dataForm: formData })
+        }
       } else {
-        createDriverDatabases({ id_unique, dataForm: formData })
+        if (initialData) {
+          if (isDataChanged) {
+            updateDriverDatabases({
+              id_unique: initialData.$id,
+              dataForm: formData,
+            })
+              .unwrap()
+              .then((payload) => driverRefetch())
+          }
+        } else {
+          createDriverDatabases({ id_unique, dataForm: formData })
+        }
       }
       setIsFileUploading(false)
     }
@@ -236,8 +316,23 @@ const PublicationForm = ({ isToggle }) => {
   ])
 
   useEffect(() => {
-    if (!driverLoading && !passengerLoading) {
+    if (
+      !driverLoading &&
+      !passengerLoading &&
+      !driverUpdateLoading &&
+      !passengerUpdateLoading
+    ) {
       form.resetFields()
+      if (closeFormModal) {
+        if (
+          !passengerUpdateError &&
+          !driverUpdateError &&
+          (driverUpdateData || passengerUpdateData)
+        ) {
+          closeFormModal()
+        }
+      }
+      setIsDataChanged(false)
     }
     if (driverData) {
       dispatch(setSaveData(driverData))
@@ -247,6 +342,14 @@ const PublicationForm = ({ isToggle }) => {
       dispatch(setLoading())
     } else if (driverError || passengerError) {
       dispatch(setError())
+    } else if (passengerUpdateData) {
+      dispatch(setSaveData(passengerUpdateData))
+    } else if (driverUpdateData) {
+      dispatch(setSaveData(driverUpdateData))
+    } else if (passengerUpdateLoading || driverUpdateLoading) {
+      dispatch(setLoading())
+    } else if (driverUpdateError || passengerUpdateError) {
+      dispatch(setError())
     }
   }, [
     driverData,
@@ -255,11 +358,47 @@ const PublicationForm = ({ isToggle }) => {
     passengerData,
     driverError,
     passengerError,
+    driverUpdateLoading,
+    passengerUpdateLoading,
   ])
+
+  useEffect(() => {
+    if (initialData) {
+      if (isToggle) {
+        form.setFieldsValue({
+          username: initialData.username ?? '',
+          time: initialData.datetime ? dayjs(initialData.datetime) : null,
+          to: initialData.to,
+          from: initialData.from,
+          numberOfPassengers: initialData.numberOfPassengers,
+          mainPhone: initialData.mainPhone?.replace(
+            /^\+?(996|997|998|999)/,
+            '',
+          ),
+          comment: initialData.comment ?? '',
+        })
+      } else {
+        form.setFieldsValue({
+          username: initialData.username ?? '',
+          time: initialData.datetime ? dayjs(initialData.datetime) : null,
+          to: initialData.to,
+          from: initialData.from,
+          numberOfPassengers: initialData.numberOfPassengers,
+          mainPhone: initialData.mainPhone?.replace(
+            /^\+?(996|997|998|999)/,
+            '',
+          ),
+          comment: initialData.comment ?? '',
+          auto: initialData.auto,
+        })
+      }
+    }
+  }, [initialData, form])
 
   useEffect(() => {
     return () => {
       dispatch(clearSave())
+      setIsDataChanged(false)
     }
   }, [])
 
@@ -269,6 +408,7 @@ const PublicationForm = ({ isToggle }) => {
         form={form}
         onFinish={onFinish}
         onFieldsChange={onFieldsChange}
+        onValuesChange={() => setIsDataChanged(true)}
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 14 }}
         layout="horizontal"
@@ -362,29 +502,31 @@ const PublicationForm = ({ isToggle }) => {
                 className="w-4 top-[0.45rem] right-11 absolute z-10"
               />
               <Form.Item name="numberOfPassengers">
-                <InputNumber min={1} max={7} />
+                <InputNumber min={1} max={11} />
               </Form.Item>
             </div>
           </Form.Item>
         ) : (
           ''
         )}
-        <Form.Item
-          label="Марка машины"
-          name="auto"
-          rules={[
-            {
-              required: true,
-              message: 'Укажите марку машины.',
-            },
-          ]}
-        >
-          <TextArea
-            placeholder="Введите марку машины"
-            autoSize
-            className="!rounded-md"
-          />
-        </Form.Item>
+        {!isToggle && (
+          <Form.Item
+            label="Марка машины"
+            name="auto"
+            rules={[
+              {
+                required: true,
+                message: 'Укажите марку машины.',
+              },
+            ]}
+          >
+            <TextArea
+              placeholder="Введите марку машины"
+              autoSize
+              className="!rounded-md"
+            />
+          </Form.Item>
+        )}
         <Form.Item label="Контакты">
           <div className="flex flex-col gap-y-3 w-full">
             <Form.Item
@@ -469,6 +611,8 @@ const PublicationForm = ({ isToggle }) => {
                 createFileLoad ||
                 isFileUploading ||
                 getImageLoad ||
+                driverUpdateLoading ||
+                passengerLoading ||
                 isLoading)
             }
           >
@@ -478,6 +622,8 @@ const PublicationForm = ({ isToggle }) => {
               createFileLoad ||
               getImageLoad ||
               isLoading ||
+              driverUpdateLoading ||
+              passengerLoading ||
               isFileUploading) ? (
               <Spin />
             ) : (

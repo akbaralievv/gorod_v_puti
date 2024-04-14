@@ -5,11 +5,10 @@ import { NavLink, useNavigate } from 'react-router-dom'
 
 import hideEye from '../../assets/icons/authForm/hide eye.png'
 import showEye from '../../assets/icons/authForm/view eye.png'
+import logo from '../../../public/logo blue.png'
 
 import { updatePasswordRequest } from '../../utils/api'
 import { clearUpdatePasswordData } from '../../redux/slices/account/updatePassword'
-
-import logo from '../../../public/logo blue.png'
 
 const UpdatePassword = () => {
   const { updatePasswordData, loading: updatePasswordLoad } = useSelector(

@@ -8,7 +8,7 @@
   border: 1px solid transparent;
   box-shadow: none;
 }
-:where(.css-dev-only-do-not-override-17p8957).ant-select-dropdown {
+.ant-select-dropdown {
   width: auto !important;
   max-width: 400px;
 }

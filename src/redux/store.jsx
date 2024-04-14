@@ -15,6 +15,7 @@ import getFile from './slices/files/getFile'
 import getImage from './slices/files/getImage'
 import saveStateFile from './slices/files/saveStateFile'
 import isFavorites from './slices/files/isFavorites'
+import deleteFile from './slices/files/deleteFile'
 
 export const store = configureStore({
   reducer: {
@@ -33,6 +34,7 @@ export const store = configureStore({
     getImage,
     saveStateFile,
     isFavorites,
+    deleteFile,
   },
 
   middleware: (getDefaultMiddleware) =>

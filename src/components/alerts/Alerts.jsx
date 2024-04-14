@@ -5,14 +5,7 @@ import InfoAlert from './alertComponents/InfoAlert'
 import SuccessAlert from './alertComponents/SuccessAlert'
 import ErrorAlert from './alertComponents/ErrorAlert'
 import WarnAlert from './alertComponents/WarnAlert'
-import {
-  useCreateDriverCollectionMutation,
-  useGetDriverCollectionQuery,
-} from '../../services/databases/driverCollection'
-import {
-  useCreatePassengerCollectionMutation,
-  useGetPassengerCollectionQuery,
-} from '../../services/databases/passengerCollection'
+
 import { clearSave } from '../../redux/slices/files/saveStateFile'
 
 function Alerts() {

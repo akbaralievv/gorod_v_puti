@@ -12,8 +12,7 @@
     align-items: center;
     gap: 10px;
   }
-  :where(.css-dev-only-do-not-override-42nv3w).ant-form-item
-    .ant-form-item-label {
+  .ant-form-item .ant-form-item-label {
     overflow: visible;
     white-space: normal;
   }
@@ -42,7 +41,7 @@
   .ant-select-show-arrow {
     width: 80px !important;
   }
-  :where(.css-dev-only-do-not-override-42nv3w).ant-form-item {
+  .ant-form-item {
     margin-bottom: 0;
   }
   .ant-input-outlined {
@@ -51,16 +50,18 @@
   .ant-select-selection-placeholder {
     text-align: left;
   }
-  :where(.css-dev-only-do-not-override-42nv3w).ant-form-item
-    .ant-form-item-label
-    > label::after {
+  .ant-form-item .ant-form-item-label > label::after {
     visibility: visible;
   }
-  :where(.css-dev-only-do-not-override-42nv3w).ant-form-item
-    .ant-form-item-label {
+  .ant-form-item .ant-form-item-label {
     padding: 0;
   }
   .ant-space-item:first-child {
     width: 94%;
+  }
+}
+.card {
+  .ant-form {
+    width: 100%;
   }
 }

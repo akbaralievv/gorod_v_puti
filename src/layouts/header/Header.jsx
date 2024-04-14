@@ -1,9 +1,9 @@
-import { Fragment, useEffect } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useLocation } from 'react-router-dom'
 
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 import { getFileRequest, logoutRequest } from '../../utils/api'
 import { clearLogoutData } from '../../redux/slices/account/logout'
@@ -16,6 +16,7 @@ const navigation = [
   { name: 'Транспорты', to: '/transports', current: false },
   { name: 'Пассажиры', to: '/passengers', current: false },
   { name: 'Избранные', to: '/favorites', current: false },
+  { name: 'Мои посты', to: '/myPublications', current: false },
 ]
 
 function classNames(...classes) {
@@ -29,6 +30,10 @@ function Header() {
     (state) => state.getFile,
   )
   const { isValid, isLoading } = useImageChecker(getFileData)
+  const { isFavorites, isToggleFavorites } = useSelector(
+    (state) => state.isFavorites,
+  )
+  const [badgeNumber, setBadgeNumber] = useState(0)
 
   const dispatch = useDispatch()
   const location = useLocation()
@@ -44,6 +49,11 @@ function Header() {
     dispatch(getFileRequest(userData?.$id))
     return () => dispatch(clearLogoutData())
   }, [])
+
+  useEffect(() => {
+    const arrayNumber = JSON.parse(localStorage.getItem('favorites')) || []
+    setBadgeNumber(arrayNumber?.length)
+  }, [isFavorites, isToggleFavorites])
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -77,12 +87,17 @@ function Header() {
                             isActive
                               ? 'bg-gray-900 text-white'
                               : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                            'rounded-md px-3 py-2 text-sm font-medium',
+                            `rounded-md px-3 py-2 text-sm font-medium ${item.name === 'Избранные' ? 'relative' : ''}`,
                           )
                         }
                         aria-current={isActive(item.to) ? 'page' : undefined}
                       >
                         {item.name}
+                        {item.name === 'Избранные' && (
+                          <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 rounded-full -top-2 -end-2">
+                            {badgeNumber}
+                          </div>
+                        )}
                       </NavLink>
                     ))}
                   </div>

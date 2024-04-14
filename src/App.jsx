@@ -8,6 +8,7 @@ import Layout from './hoc/Layout'
 import ModalPreload from './components/modalPreload/ModalPreload'
 import Favorites from './pages/favorites/Favorites'
 import Profile from './pages/profile/Profile'
+import MyPublications from './pages/myPublications/MyPublications'
 
 const Login = lazy(() => import('./pages/login/Login'))
 const Main = lazy(() => import('./pages/main/Main'))
@@ -39,6 +40,7 @@ function App() {
               <Route path="/passengers/:id" element={<Detail />} />
               <Route path="/favorites" element={<Favorites />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/myPublications" element={<MyPublications />} />
             </Route>
           </Route>
           <Route path="/*" element={<NotFound />} />

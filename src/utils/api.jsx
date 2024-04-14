@@ -149,3 +149,15 @@ export const getImageRequest = createAsyncThunk(
     }
   },
 )
+
+export const deleteFileRequest = createAsyncThunk(
+  'deleteFile/deleteFileRequest',
+  async ({ id }, { rejectWithValue }) => {
+    try {
+      const response = await storage.deleteFile(bucket_id, id)
+      return response
+    } catch (error) {
+      return rejectWithValue(error.code)
+    }
+  },
+)

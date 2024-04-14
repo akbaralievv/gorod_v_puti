@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Form, Select, ConfigProvider, Space, Spin, AutoComplete } from 'antd'
+import { Form, ConfigProvider, Space, AutoComplete } from 'antd'
 import debounce from 'lodash.debounce'
 
 import './CountrySelect.scss'
@@ -68,7 +68,11 @@ export default function CountrySelect({
           : false
       }
     >
-      <Space direction="vertical" size={12} className="flex flex-auto">
+      <Space
+        direction="vertical"
+        size={12}
+        className="flex flex-auto w-full max-w-72"
+      >
         <Form className="flex flex-auto">
           <Form.Item name="gender" className="flex flex-auto mb-0">
             <AutoComplete
@@ -78,7 +82,7 @@ export default function CountrySelect({
               placeholder={label}
               value={value}
               allowClear
-              className="flex flex-auto w-full 575:w-48 min-w-28 "
+              className="flex flex-auto w-full 575:w-48 min-w-28"
             />
           </Form.Item>
         </Form>

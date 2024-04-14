@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   isFavorites: false,
+  isToggleFavorites: false,
 }
 
 const isFavoritesSlice = createSlice({
@@ -11,8 +12,11 @@ const isFavoritesSlice = createSlice({
     setIsFavorites: (state, action) => {
       state.isFavorites = action.payload
     },
+    setIsToggleFavorites: (state, action) => {
+      state.isToggleFavorites = action.payload
+    },
   },
 })
 
-export const { setIsFavorites } = isFavoritesSlice.actions
+export const { setIsFavorites, setIsToggleFavorites } = isFavoritesSlice.actions
 export default isFavoritesSlice.reducer
