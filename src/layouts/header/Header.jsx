@@ -195,7 +195,7 @@ function Header() {
                   >
                     {item.name}
                     {item.name === 'Избранные' && (
-                      <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 rounded-full -top-2 -end-2">
+                      <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 rounded-full -top-2 left-[90px]">
                         {badgeNumber}
                       </div>
                     )}
