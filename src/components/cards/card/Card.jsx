@@ -41,6 +41,7 @@ function Card({ data, edit, passengersRefetch, driverRefetch }) {
   const [isFormModalOpen, setIsFormModalOpen] = useState(false)
   const [like, setLike] = useState(false)
   const [isLoadingImage, setIsLoadingImage] = useState(true)
+  const [imageError, setImageError] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -149,12 +150,15 @@ function Card({ data, edit, passengersRefetch, driverRefetch }) {
                   </svg>
                 </div>
               )}
-              <img
-                className="rounded w-5/12"
-                src={data.image}
-                alt="Hollywood Sign on The Hill"
-                onLoad={() => setIsLoadingImage(false)}
-              />
+              {!imageError && (
+                <img
+                  className="rounded w-5/12"
+                  src={data.image}
+                  alt="Hollywood Sign on The Hill"
+                  onLoad={() => setIsLoadingImage(false)}
+                  onError={() => setImageError(true)}
+                />
+              )}
             </div>
           </div>
           <Transition.Root show={isImageModalOpen} as={Fragment}>
