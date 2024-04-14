@@ -115,7 +115,7 @@ function Detail() {
                 <img
                   src={data.image}
                   alt="Product"
-                  className="rounded w-[30%]"
+                  className="rounded w-[31%]"
                 />
                 <button
                   type="button"

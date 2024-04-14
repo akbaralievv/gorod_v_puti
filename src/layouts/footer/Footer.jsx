@@ -59,16 +59,18 @@ function Footer() {
               <ul className="text-gray-500 dark:text-gray-400 font-medium flex flex-col gap-2">
                 <li>
                   <a
-                    href="https://github.com/themesberg/flowbite"
+                    href="https://wa.me/996701558893?text=Здравствуйте,%20пишу%20по%20поводу%20сайта%20Город%20в%20пути."
                     className="hover:underline "
+                    target="_blank"
                   >
                     WhatsApp
                   </a>
                 </li>
                 <li>
                   <a
-                    href="https://discord.gg/4eeurUVvTy"
+                    href="https://t.me/kalyrim"
                     className="hover:underline"
+                    target="_blank"
                   >
                     Telegram
                   </a>
@@ -105,8 +107,9 @@ function Footer() {
           </span>
           <div className="flex mt-4 sm:justify-center sm:mt-0 pr-14">
             <a
-              href="#"
+              href="https://www.instagram.com/kalyrimma?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
+              target="_blank"
             >
               <svg
                 className="w-4 h-4"
@@ -120,8 +123,9 @@ function Footer() {
               <span className="sr-only">Instagram</span>
             </a>
             <a
-              href="#"
+              href="https://github.com/akbaralievv/gorod_v_puti"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
+              target="_blank"
             >
               <svg
                 className="w-4 h-4"
