@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-
 import { getFileRequest } from '../../../utils/api'
 
 const initialState = {

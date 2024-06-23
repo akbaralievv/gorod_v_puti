@@ -7,7 +7,7 @@ const passengerCollection = baseApiAppwrite.injectEndpoints({
   endpoints: (build) => ({
     getPassengerCollection: build.query({
       query: ({ search, user_id }) => {
-        return `databases/${IDEAS_DATABASE_ID}/collections/${IDEAS_COLLECTION_ID}/documents?${search.from ? `queries[]=search("from",${search.from})` : ''}${search.to ? `queries[]=search("to",${search.to})` : ''}${search.numberOfPassengers ? `queries[]=equal("numberOfPassengers",${search.numberOfPassengers})` : ''}${search.formattedDateTime ? `queries[]=search("formattedDateTime",${search.formattedDateTime?.replace(/ в \d{2}:\d{2}/, '')})` : ''}${user_id ? `queries[]=equal("user_id",${user_id})` : ''}`
+        return `databases/${IDEAS_DATABASE_ID}/collections/${IDEAS_COLLECTION_ID}/documents?${search.from ? `queries[0]={"method":"search","attribute":"from","values":["${search.from}"]}` : ''}${search.to ? `queries[0]={"method":"search","attribute":"to","values":["${search.to}"]}` : ''}${search.numberOfPassengers ? `queries[0]={"method":"search","attribute":"nemberOfPassengers","values":["${search.nemberOfPassengers}"]}` : ''}${search.formattedDateTime ? `queries[0]={"method":"search","attribute":"formattedDateTime","values":["${search.formattedDateTime?.replace(/ в \d{2}:\d{2}/, '')}"]}` : ''}${user_id ? `queries[0]={"method":"equal","attribute":"user_id","values":["${user_id}"]}` : ''}`
       },
     }),
     createPassengerCollection: build.mutation({
