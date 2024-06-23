@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
-
 import { baseApiAppwrite, baseApiSuggest } from '../services/baseSplitApi'
 import getUser from './slices/account/getUser'
 import isAuthUser from './slices/account/isAuthUser'
@@ -10,12 +9,12 @@ import register from './slices/account/register'
 import resetPassword from './slices/account/resetPassword'
 import updatePassword from './slices/account/updatePassword'
 import createFile from './slices/files/createFile'
-import listFiles from './slices/files/listFiles'
+import deleteFile from './slices/files/deleteFile'
 import getFile from './slices/files/getFile'
 import getImage from './slices/files/getImage'
-import saveStateFile from './slices/files/saveStateFile'
 import isFavorites from './slices/files/isFavorites'
-import deleteFile from './slices/files/deleteFile'
+import listFiles from './slices/files/listFiles'
+import saveStateFile from './slices/files/saveStateFile'
 
 export const store = configureStore({
   reducer: {

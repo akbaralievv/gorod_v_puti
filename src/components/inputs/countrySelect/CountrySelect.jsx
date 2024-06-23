@@ -1,8 +1,7 @@
-import * as React from 'react'
-import { Form, ConfigProvider, Space, AutoComplete } from 'antd'
-import debounce from 'lodash.debounce'
-
 import './CountrySelect.scss'
+import { AutoComplete, ConfigProvider, Form, Space } from 'antd'
+import debounce from 'lodash.debounce'
+import * as React from 'react'
 import { useLazyGetSuggestCountryQuery } from '../../../services/suggest/suggestCountry'
 
 export default function CountrySelect({

@@ -1,8 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { ID } from 'appwrite'
-
-import { account } from '../libs/appwrite'
-import { storage } from '../libs/appwrite'
+import { account, storage } from '../libs/appwrite'
 
 const id_user = ID.unique()
 const bucket_id = import.meta.env.VITE_BUCKET_ID

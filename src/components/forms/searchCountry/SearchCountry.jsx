@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-
 import CountrySelect from '../../inputs/countrySelect/CountrySelect'
 
 function SearchCountry({ setSearchCountryValue, setState }) {

@@ -1,11 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-
 import CardsContainer from '../../components/cards/CardsContainer'
-import Paginate from '../../components/pagination/Paginate'
-
-import { useGetDriverCollectionQuery } from '../../services/databases/driverCollection'
 import SearchCountry from '../../components/forms/searchCountry/SearchCountry'
+import Paginate from '../../components/pagination/Paginate'
+import { useGetDriverCollectionQuery } from '../../services/databases/driverCollection'
 
 function Transports() {
   const location = useLocation()
